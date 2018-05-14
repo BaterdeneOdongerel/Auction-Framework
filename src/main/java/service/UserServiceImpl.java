@@ -3,12 +3,14 @@ package service;
 
 import db.ConnectionConfiguration;
 import model.user.User;
+import org.springframework.stereotype.Service;
 import props.MessagesProp;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
     private User currentUser;

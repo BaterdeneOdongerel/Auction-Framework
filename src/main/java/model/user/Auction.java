@@ -14,7 +14,7 @@ public class Auction {
     private BigDecimal minimumPrice;
     private User bidOwner;
     private boolean isRunning;
-    private User currentUser;
+    private User currentWinner;
     private Bid currentWinningBid;
     private User winner;
     private List<Bid> bids;
