@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="AuctionSystem:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/AuctionSystem_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="AuctionSystem/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="AuctionSystem" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
