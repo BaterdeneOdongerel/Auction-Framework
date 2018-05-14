@@ -18,5 +18,7 @@ public class Auction {
     private Bid currentWinningBid;
     private User winner;
     private List<Bid> bids;
+
+    //private Product product;
 }
 
