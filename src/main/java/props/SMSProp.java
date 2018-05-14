@@ -8,14 +8,14 @@ import java.util.Properties;
 
 /**
  */
-public enum DatabaseProp {
+public enum SMSProp {
 
     INSTANCE;
     private Properties prop;
-    private DatabaseProp() {
+    private SMSProp() {
         prop = new Properties();
         try {
-            prop.load(ConnectionConfiguration.class.getClassLoader().getResourceAsStream("database.properties"));
+            prop.load(ConnectionConfiguration.class.getClassLoader().getResourceAsStream("sms.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
