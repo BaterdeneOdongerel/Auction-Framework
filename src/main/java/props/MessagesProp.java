@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Created by Van on 4/23/18.
  */
 public enum MessagesProp {
 

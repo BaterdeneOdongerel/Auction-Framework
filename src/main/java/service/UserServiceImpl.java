@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
                 user.setUserId(resultSet.getInt("id"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("email"));
+                user.setEmail(resultSet.getString("communication"));
                 user.setUsername(resultSet.getString("user_name"));
                 user.setPassword(resultSet.getString("password"));
             }
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
                 user.setUserId(resultSet.getInt("user_id"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("email"));
+                user.setEmail(resultSet.getString("communication"));
                 user.setPassword(resultSet.getString("password"));
             }
 
@@ -171,7 +171,7 @@ public class UserServiceImpl implements UserService {
                 user.setUserId(resultSet.getInt("user_id"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setFirstName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("email"));
+                user.setEmail(resultSet.getString("communication"));
                 user.setPassword(resultSet.getString("password"));
                 users.add(user);
             }
@@ -292,7 +292,7 @@ public class UserServiceImpl implements UserService {
                 user.setUserId(resultSet.getInt("id"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("email"));
+                user.setEmail(resultSet.getString("communication"));
                 user.setPassword(resultSet.getString("password"));
                 ret = true;
                 currentUser = user;
@@ -336,7 +336,7 @@ public class UserServiceImpl implements UserService {
                 user.setUsername(resultSet.getString("user_name"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("email"));
+                user.setEmail(resultSet.getString("communication"));
                 user.setPassword(resultSet.getString("password"));
                 users.add(user);
             }
