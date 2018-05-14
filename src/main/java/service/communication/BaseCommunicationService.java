@@ -7,7 +7,7 @@ public abstract class BaseCommunicationService implements CanCommunicate {
 
     @Override
     public void send(Option option, CommunicationType type) {
-        // Record the messages to the system then s
+        // Do some logging before sending out
         _send(option, type);
     }
 
