@@ -12,6 +12,7 @@ public enum EmailProp {
 
     INSTANCE;
     private Properties prop;
+
     private EmailProp() {
         prop = new Properties();
         try {

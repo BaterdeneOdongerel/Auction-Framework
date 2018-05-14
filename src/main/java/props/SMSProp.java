@@ -12,6 +12,7 @@ public enum SMSProp {
 
     INSTANCE;
     private Properties prop;
+
     private SMSProp() {
         prop = new Properties();
         try {
