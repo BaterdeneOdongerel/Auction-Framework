@@ -1,7 +1,8 @@
-package model.user;
+package service;
 
 
 import db.ConnectionConfiguration;
+import model.user.User;
 import props.MessagesProp;
 
 import java.sql.*;
