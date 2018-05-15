@@ -2,7 +2,7 @@ package service;
 
 import db.ConnectionConfiguration;
 import model.user.Bid;
-import model.user.User;
+
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service("bidService")
-public class BidServiceImpl implements BidSevice {
+public class BidServiceImpl implements BidService {
     @Override
     public void create(Bid bid) {
         Connection connection = null;

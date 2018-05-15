@@ -5,9 +5,9 @@ import model.user.Bid;
 
 import java.util.List;
 
-public interface BidSevice {
+public interface BidService extends CrudTemplate<Bid> {
 
-    void create(Bid bid);
+   /* void create(Bid bid);
 
     Bid selectById(int id);
 
@@ -15,5 +15,5 @@ public interface BidSevice {
 
     void delete(int id);
 
-    void update(Bid bid, int id);
+    void update(Bid bid, int id);*/
 }
