@@ -4,15 +4,15 @@ import model.user.Auction;
 
 import java.util.List;
 
-public interface AuctionService {
+public interface AuctionService extends CrudTemplate<Auction> {
 
-    void create(Auction auction);
+    // void create(Auction auction);
 
-    Auction selectById(int id);
+    //Auction selectById(int id);
 
-    List<Auction> selectAll();
+    // List<Auction> selectAll();
 
-    void delete(int id);
+    // void delete(int id);
 
-    void update(Auction auction, int id);
+    // void update(Auction auction, int id);
 }
