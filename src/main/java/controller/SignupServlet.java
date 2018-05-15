@@ -40,7 +40,7 @@ public class SignupServlet extends BaseServlet {
             user.setLastName(lname);
             user.setPassword(pass);
             user.setEmail(email);
-            imp.insert(user);
+            imp.create(user);
             request.getSession().setAttribute("user", user);
             response.sendRedirect("/");
         } else {

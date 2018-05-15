@@ -19,8 +19,8 @@
                 <ul class="nav navbar-nav">
                     <c:if test="${not empty user}">
                         <li class="active"><a href="/">Home</a></li>
-                        <li><a href="live">Live Cycling Events</a></li>
                         <li><a href="users">Users</a></li>
+
                         <li><a href="create">Create event</a></li>
                     </c:if>
 
