@@ -1,5 +1,6 @@
 create database auction_system;
 use auction_system;
+
 CREATE TABLE IF NOT EXISTS `User` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
 	`email` VARCHAR(100) UNIQUE,
