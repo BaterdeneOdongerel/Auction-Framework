@@ -18,5 +18,9 @@ public class Auction {
     private boolean isRunning;
 
     private long product;
+
+    private long currentWinner;
+    private long currentWinningBid;
+    private long winner;
 }
 

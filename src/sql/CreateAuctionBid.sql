@@ -14,25 +14,7 @@ CREATE TABLE IF NOT EXISTS `bid` (
   COLLATE utf8_general_ci;
 
 
-USE auction_system;
-
 CREATE TABLE IF NOT EXISTS `auction` (
-  `id`           BIGINT NOT NULL AUTO_INCREMENT,
-  `minimumPrice` DOUBLE,
-  `startDate`    DATE,
-  `endDate`      DATE,
-  `isrunning`    INT             DEFAULT 1,
-  `bidOwner`     BIGINT,
-  `product`      BIGINT,
-  PRIMARY KEY (`id`)
-)
-  ENGINE MyISAM
-  DEFAULT CHARACTER SET utf8
-  COLLATE utf8_general_ci;
-
-
-USE auction_system;
-CREATE TABLE IF NOT EXISTS `bidAuctionTest` (
 
   `id`                BIGINT NOT NULL AUTO_INCREMENT,
   `minimumPrice`      DOUBLE,
@@ -52,8 +34,7 @@ CREATE TABLE IF NOT EXISTS `bidAuctionTest` (
   COLLATE utf8_general_ci;
 
 
-USE auction_system;
-CREATE TABLE IF NOT EXISTS `bidAuction` (
+CREATE TABLE IF NOT EXISTS `bidAuctionNotUsed` (
 
   `bidId`             BIGINT REFERENCES bid (id),
   `auctionId`         BIGINT REFERENCES auction (id),
@@ -68,12 +49,3 @@ CREATE TABLE IF NOT EXISTS `bidAuction` (
   COLLATE utf8_general_ci;
 
 
-USE auction_system;
-CREATE TABLE IF NOT EXISTS `productTest` (
-  `id`   BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100),
-  PRIMARY KEY (`id`)
-)
-  ENGINE MyISAM
-  DEFAULT CHARACTER SET utf8
-  COLLATE utf8_general_ci;

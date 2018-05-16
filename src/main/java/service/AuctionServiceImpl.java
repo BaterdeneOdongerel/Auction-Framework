@@ -25,10 +25,15 @@ public class AuctionServiceImpl implements AuctionService {
     public static void main(String arg[]) throws ParseException {
         AuctionServiceImpl a = new AuctionServiceImpl();
         Date d = Date.valueOf("2018-05-15");
-        // List<AuctionReport> getLists =  a.selectAuctionReport( d ,d,true);
+        Date d1 = Date.valueOf("2018-05-16");
+        List<AuctionReport> getLists = a.selectAuctionReport(d, d1, true);
 
 
-        a.processCurrentWinningBid();
+        for (AuctionReport b : getLists) {
+            System.out.println("Bid Owner:" + b.getBidOwner() + "  " + b.getBidUser() + " bid amount:" + b.getBidAmount());
+        }
+
+        //a.processCurrentWinningBid();
         //ConcreteIterator auctionList = new ConcreteIterator(getLists);
         //Iterator auctionIterator = auctionList.getIterator();
 
@@ -63,10 +68,9 @@ public class AuctionServiceImpl implements AuctionService {
                 auction.setEndDate(resultSet.getDate("endDate"));
                 auction.setRunning(resultSet.getBoolean("isRunning"));
                 auction.setMinimumPrice(resultSet.getBigDecimal("minimumPrice"));
-                // auction.setCurrentWinner(resultSet.getInt("currentWinner"));
-                // auction.setCurrentWinningBid(resultSet.getInt("currentWinningBid"));
-                //  auction.setWinner(resultSet.getInt("winner"));
-                // auction.setBids(resultSet.getInt("bids"));
+                auction.setCurrentWinner(resultSet.getLong("currentWinner"));
+                auction.setCurrentWinningBid(resultSet.getLong("currentWinningBid"));
+                auction.setWinner(resultSet.getLong("winner"));
 
             }
 
@@ -101,57 +105,8 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public List<Auction> selectAll() {
-        List<Auction> auctions = new ArrayList<>();
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
 
-        try {
-            connection = ConnectionConfiguration.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM auction");
-
-            while (resultSet.next()) {
-                Auction auction = new Auction();
-                auction.setId(resultSet.getInt("id"));
-                auction.setStartDate(resultSet.getDate("startDate"));
-                auction.setEndDate(resultSet.getDate("endDate"));
-                auction.setRunning(resultSet.getBoolean("isRunning"));
-                auction.setMinimumPrice(resultSet.getBigDecimal("minimumPrice"));
-                // auction.setCurrentWinner(resultSet.getInt("currentWinner"));
-                // auction.setCurrentWinningBid(resultSet.getInt("currentWinningBid"));
-                //  auction.setWinner(resultSet.getInt("winner"));
-                // auction.setBids(resultSet.getInt("bids"));
-                auctions.add(auction);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return auctions;
+        return null;
     }
 
     @Override
@@ -195,8 +150,8 @@ public class AuctionServiceImpl implements AuctionService {
         try {
             connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.
-                    prepareStatement("INSERT INTO auction (startDate, endDate, minimumPrice, bidOwner,isRunning) "
-                            + " VALUES (?, ?, ?, ?, ?)");
+                    prepareStatement("INSERT INTO auction (startDate, endDate, minimumPrice, bidOwner,isRunning,product) "
+                            + " VALUES (?, ?, ?, ?, ?,?)");
 
             preparedStatement.setDate(1, auction.getStartDate());
             preparedStatement.setDate(2, auction.getEndDate());
@@ -204,6 +159,7 @@ public class AuctionServiceImpl implements AuctionService {
             preparedStatement.setLong(4, auction.getBidOwner());
 
             preparedStatement.setBoolean(5, auction.isRunning());//TODO this should be default
+            preparedStatement.setLong(6, auction.getProduct());
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
@@ -236,7 +192,7 @@ public class AuctionServiceImpl implements AuctionService {
             connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection
                     .prepareStatement("UPDATE auction SET " + "startDate = ?, endDate = ?, minimumPrice = ?, bidOwner=? " +
-                            ", isRunning= ? WHERE id = ?");
+                            ", isRunning= ?,product = ? WHERE id = ?");
 
             preparedStatement.setDate(1, auction.getStartDate());
             preparedStatement.setDate(2, auction.getEndDate());
@@ -244,8 +200,9 @@ public class AuctionServiceImpl implements AuctionService {
             preparedStatement.setLong(4, auction.getBidOwner());
 
             preparedStatement.setBoolean(5, auction.isRunning());
+            preparedStatement.setLong(6, auction.getProduct());
 
-            preparedStatement.setInt(6, id);
+            preparedStatement.setInt(7, id);
 
             preparedStatement.executeUpdate();
 
@@ -280,19 +237,19 @@ public class AuctionServiceImpl implements AuctionService {
         try {
             connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("select " +
-                    "bidId," +
-                    "auctionId,startDate,endDate,bidDate,b.amount bidAmount,a.minimumPrice," +
+                    "b.id bidId," +
+                    "a.id auctionId,startDate,endDate,bidDate,b.amount bidAmount,a.minimumPrice," +
                     " case  when isRunning = 1 then 'Open' else 'Closed'  end isRunning," +
-                    "(select name from producttest where id = a.product ) product," +
+                    "(select name from product where id = a.product ) product," +
                     " currentWinningBid," +
-                    "(select concat (first_name ,' ' , last_name) from user where id = ba.winner ) winner," +
+                    "(select concat (first_name ,' ' , last_name) from user where id = a.winner ) winner," +
                     "(select concat (first_name ,' ' , last_name) from user where id = b.user ) bidUser," +
-                    "(select concat (first_name ,' ' , last_name) from user where id = ba.currentWinner ) currentWinner," +
+                    "(select concat (first_name ,' ' , last_name) from user where id = a.currentWinner) currentWinner," +
                     "(select concat (first_name ,' ' , last_name) from user where id = a.bidOwner ) bidOwner " +
-                    "from bidauction ba,auction a, bid b" +
-                    " where ba.bidId = b.id and ba.auctionId = a.id" +
+                    "from auction a, bid b" +
+                    " where  a.id = b.auction" +
                     " and a.startDate >= ? and a.endDate <= ?" +
-                    " and a.isRunning = ? ");
+                    " and a.isRunning = ?; ");
 
             preparedStatement.setDate(1, startDate);
             preparedStatement.setDate(2, endDate);
@@ -319,6 +276,8 @@ public class AuctionServiceImpl implements AuctionService {
                 auction.setBidUser(resultSet.getString("bidUser"));
 
                 auction.setBidDate(resultSet.getDate("bidDate"));
+
+                auction.setBidOwner(resultSet.getString("bidOwner"));
 
 
                 auctions.add(auction);
