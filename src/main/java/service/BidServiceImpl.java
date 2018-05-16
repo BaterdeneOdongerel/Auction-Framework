@@ -4,6 +4,7 @@ import db.ConnectionConfiguration;
 import model.user.Bid;
 
 import org.springframework.stereotype.Service;
+import utils.Utils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,16 +16,19 @@ public class BidServiceImpl implements BidService {
     public void create(Bid bid) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        UserServiceImpl useImpl = new UserServiceImpl();
 
         try {
+
+
             connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.
                     prepareStatement("INSERT INTO bid (amount, bidDate, auction, user) "
                             + " VALUES (?, ?, ?, ?)");
-            preparedStatement.setBigDecimal(1, bid.getAmount());
-            preparedStatement.setDate(2, bid.getBidDate());
-            preparedStatement.setInt(3, bid.getAuction().getId());
-            preparedStatement.setInt(4, bid.getUser().getUserId());
+            preparedStatement.setDouble(1, bid.getAmount());
+            preparedStatement.setDate(2, Utils.sqlCurrentDate());
+            preparedStatement.setLong(3, bid.getAuction());
+            preparedStatement.setLong(4, useImpl.getCurrentUser().getUserId());
 
             preparedStatement.executeUpdate();
 
@@ -64,10 +68,10 @@ public class BidServiceImpl implements BidService {
 
             while (resultSet.next()) {
                 bid.setId(resultSet.getInt("id"));
-                bid.setAmount(resultSet.getBigDecimal("amount"));
+                bid.setAmount(resultSet.getDouble("amount"));
                 bid.setBidDate(resultSet.getDate("bidDate"));
-                //bid.setUser(resultSet.getInt("user"));
-                //bid.setAuction(resultSet.getInt("auction"));
+                bid.setUser(resultSet.getLong("user"));
+                bid.setAuction(resultSet.getLong("auction"));
             }
 
         } catch (Exception e) {
@@ -114,7 +118,7 @@ public class BidServiceImpl implements BidService {
             while (resultSet.next()) {
                 Bid bid = new Bid();
                 bid.setId(resultSet.getInt("id"));
-                bid.setAmount(resultSet.getBigDecimal("amount"));
+                bid.setAmount(resultSet.getDouble("amount"));
                 bid.setBidDate(resultSet.getDate("bidDate"));
                 // bid.setUser(resultSet.getInt("user"));
                 //bid.setAuction(resultSet.getInt("auction"));
@@ -193,11 +197,11 @@ public class BidServiceImpl implements BidService {
             preparedStatement = connection
                     .prepareStatement("UPDATE bid SET " + "amount = ?, bidDate = ?, auction = ?, user=? WHERE id = ?");
 
-            preparedStatement.setBigDecimal(1, bid.getAmount());
+            preparedStatement.setDouble(1, bid.getAmount());
             preparedStatement.setDate(2, bid.getBidDate());
-            preparedStatement.setInt(3, bid.getAuction().getId());
-            preparedStatement.setInt(4, bid.getUser().getUserId());
-            preparedStatement.setInt(5, id);
+            preparedStatement.setLong(3, bid.getAuction());
+            preparedStatement.setLong(4, bid.getUser());
+            preparedStatement.setLong(5, id);
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {

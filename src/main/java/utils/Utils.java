@@ -1,15 +1,24 @@
 package utils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
 import java.sql.Timestamp;
+
 import java.time.LocalDate;
 
+
 public class Utils {
+
+
+    public static Date sqlCurrentDate() {
+        long millis = System.currentTimeMillis();
+        return new Date(millis);
+    }
     public static Timestamp convertTime(LocalDate date) {
         return Timestamp.valueOf(date.atStartOfDay());
     }
 
-    public static LocalDate convertTime(Timestamp date) {
+    public static LocalDate convertDate(Timestamp date) {
         return date.toLocalDateTime().toLocalDate();
     }
 

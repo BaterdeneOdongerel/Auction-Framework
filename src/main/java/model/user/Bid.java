@@ -7,10 +7,10 @@ import java.sql.Date;
 
 @Data
 public class Bid {
-    private int id;
-    private BigDecimal amount;
+    private long id;
+    private double amount;
     private Date bidDate;
-    private Auction auction;
-    private User user;
+    private long auction;
+    private long user;
 
 }
