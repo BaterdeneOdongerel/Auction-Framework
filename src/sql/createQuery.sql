@@ -26,3 +26,19 @@ CREATE TABLE IF NOT EXISTS `Category` (
 ) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 insert into category(name , `desc`) values('category 1' , ' here is the description');
+
+
+CREATE TABLE IF NOT EXISTS `Product` (
+
+    `id` BIGINT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(100),
+	`desc` VARCHAR(200),
+    `catid` BIGINT,
+	`user` VARCHAR(200) comment 'id of the user who offered the best bid',
+    `bid_price` int,
+    `status` int default 0,
+	PRIMARY KEY (`id`)
+) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+insert into Product(`name` , `desc` , `catid` , `bid_price`) values('product 1' , 'wda wd a desc ' ,2, 220);
+select * from product;

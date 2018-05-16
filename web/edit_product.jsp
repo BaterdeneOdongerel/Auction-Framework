@@ -19,29 +19,34 @@
 <div class="back_container">
     <div class="container text-center">
         <div class="body_content text-left col-sm-7">
-            <h3>Edit Category</h3>
+            <h3>Edit Product</h3>
 
-            <form class="form-horizontal" action="/edit_category" method="post">
+            <form class="form-horizontal" action="/edit_product" method="post">
 
-                <input type="hidden" value="${category.id}" name="id" class="form-control" id="id"/>
+                <input type="hidden" value="${product.id}" name="id" class="form-control" id="id"/>
 
                 <div class="form-group">
 
-                    <label class="control-label col-sm-2" for="catname">Category name:</label>
+                    <label class="control-label col-sm-2" for="pname">Product name:</label>
 
                     <div class="col-sm-9">
-                        <input type="text" value="${category.name}" name="catname" class="form-control" id="catname" placeholder="Category name"/>
+                        <input type="text" value="${product.name}" name="pname" class="form-control" id="pname" placeholder="Product name"/>
                     </div>
 
                 </div>
 
 
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="desc">Category description:</label>
+                    <label class="control-label col-sm-2" for="desc">Product description:</label>
                     <div class="col-sm-9">
-                        <textarea cols="3" rows="5"  class="form-control" id="desc" name="desc" >${category.desc}</textarea>
+                        <textarea cols="3" rows="5"  class="form-control" id="desc" name="desc" >${product.desc}</textarea>
                     </div>
                 </div>
+
+                <input type="hidden" value="${product.catid}" name="catid" class="form-control" id="catid"/>
+                <input type="hidden" value="${product.user}" name="user" class="form-control" id="user"/>
+                <input type="hidden" value="${product.bid_price}" name="bid_price" class="form-control" id="bid_price"/>
+
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
