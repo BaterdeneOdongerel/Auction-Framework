@@ -1,35 +1,34 @@
 package service;
 
 import db.ConnectionConfiguration;
-import model.user.Bid;
-
-import org.springframework.stereotype.Service;
-import utils.Utils;
+import model.user.Category;
+import model.user.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("bidService")
-public class BidServiceImpl implements BidService {
+public class CategoryServiceImp implements CategoryService {
+    public static void main(String args[]){
+        CategoryServiceImp c = new CategoryServiceImp();
+        c.delete(2);
+        List<Category> cats = c.selectAll();
+        for (Category cc :cats) {
+            System.out.println("--->" + cc.getDesc());
+        }
+    }
+
     @Override
-    public void create(Bid bid) {
+    public void create(Category category) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        UserServiceImpl useImpl = new UserServiceImpl();
 
         try {
-
-
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.
-                    prepareStatement("INSERT INTO bid (amount, bidDate, auction, user) "
-                            + " VALUES (?, ?, ?, ?)");
-            preparedStatement.setDouble(1, bid.getAmount());
-            preparedStatement.setDate(2, Utils.sqlCurrentDate());
-            preparedStatement.setLong(3, bid.getAuction());
-            preparedStatement.setLong(4, useImpl.getCurrentUser().getUserId());
-
+            preparedStatement = connection.prepareStatement("INSERT INTO category (name, `desc`) "
+                    + " VALUES (?, ?)");
+            preparedStatement.setString(1, category.getName());
+            preparedStatement.setString(2, category.getDesc());
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
@@ -54,24 +53,22 @@ public class BidServiceImpl implements BidService {
     }
 
     @Override
-    public Bid selectById(int id) {
-        Bid bid = new Bid();
+    public Category selectById(int id) {
+        Category category = new Category();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("SELECT * FROM bid WHERE id = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM category WHERE id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                bid.setId(resultSet.getInt("id"));
-                bid.setAmount(resultSet.getDouble("amount"));
-                bid.setBidDate(resultSet.getDate("bidDate"));
-                bid.setUser(resultSet.getLong("user"));
-                bid.setAuction(resultSet.getLong("auction"));
+                category.setId(resultSet.getInt("id"));
+                category.setName(resultSet.getString("name"));
+                category.setDesc(resultSet.getString("desc"));
             }
 
         } catch (Exception e) {
@@ -100,12 +97,12 @@ public class BidServiceImpl implements BidService {
             }
         }
 
-        return bid;
+        return category;
     }
 
     @Override
-    public List<Bid> selectAll() {
-        List<Bid> bids = new ArrayList<>();
+    public List<Category> selectAll() {
+        List<Category> categories = new ArrayList<Category>();
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -113,16 +110,14 @@ public class BidServiceImpl implements BidService {
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM bid");
+            resultSet = statement.executeQuery("SELECT * FROM category");
 
             while (resultSet.next()) {
-                Bid bid = new Bid();
-                bid.setId(resultSet.getInt("id"));
-                bid.setAmount(resultSet.getDouble("amount"));
-                bid.setBidDate(resultSet.getDate("bidDate"));
-                // bid.setUser(resultSet.getInt("user"));
-                //bid.setAuction(resultSet.getInt("auction"));
-                bids.add(bid);
+                Category cat = new Category();
+                cat.setId(resultSet.getInt("id"));
+                cat.setName(resultSet.getString("name"));
+                cat.setDesc(resultSet.getString("desc"));
+                categories.add(cat);
             }
 
         } catch (Exception e) {
@@ -151,7 +146,7 @@ public class BidServiceImpl implements BidService {
             }
         }
 
-        return bids;
+        return categories;
     }
 
     @Override
@@ -161,11 +156,10 @@ public class BidServiceImpl implements BidService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("DELETE FROM bid WHERE id = ?");
+
+            preparedStatement = connection.prepareStatement("DELETE from category where id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
-
-            System.out.println("DELETE FROM bid WHERE id = ?");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,6 +171,7 @@ public class BidServiceImpl implements BidService {
                     e.printStackTrace();
                 }
             }
+
             if (connection != null) {
                 try {
                     connection.close();
@@ -188,20 +183,17 @@ public class BidServiceImpl implements BidService {
     }
 
     @Override
-    public void update(Bid bid, int id) {
+    public void update(Category category, int id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection
-                    .prepareStatement("UPDATE bid SET " + "amount = ?, bidDate = ?, auction = ?, user=? WHERE id = ?");
 
-            preparedStatement.setDouble(1, bid.getAmount());
-            preparedStatement.setDate(2, bid.getBidDate());
-            preparedStatement.setLong(3, bid.getAuction());
-            preparedStatement.setLong(4, bid.getUser());
-            preparedStatement.setLong(5, id);
+            preparedStatement = connection.prepareStatement("UPDATE category set name = ? , `desc` = ? where id = ?");
+            preparedStatement.setInt(3, id);
+            preparedStatement.setString(1, category.getName());
+            preparedStatement.setString(2, category.getDesc());
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
@@ -214,6 +206,7 @@ public class BidServiceImpl implements BidService {
                     e.printStackTrace();
                 }
             }
+
             if (connection != null) {
                 try {
                     connection.close();
@@ -223,4 +216,6 @@ public class BidServiceImpl implements BidService {
             }
         }
     }
+
+
 }
