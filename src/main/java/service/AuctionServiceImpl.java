@@ -8,14 +8,10 @@ import model.user.Auction;
 import model.user.Bid;
 import model.user.Report.AuctionReport;
 import org.springframework.stereotype.Service;
-import utils.Utils;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+
 import java.util.ArrayList;
 
 import java.util.List;
@@ -33,7 +29,7 @@ public class AuctionServiceImpl implements AuctionService {
             System.out.println("Bid Owner:" + b.getBidOwner() + "  " + b.getBidUser() + " bid amount:" + b.getBidAmount());
         }
 
-        //a.processCurrentWinningBid();
+        a.processCurrentWinningBid();
         //ConcreteIterator auctionList = new ConcreteIterator(getLists);
         //Iterator auctionIterator = auctionList.getIterator();
 
@@ -321,23 +317,83 @@ public class AuctionServiceImpl implements AuctionService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("select " +
-                    " user,auction," +
-                    "  Max(amount) currentWinningBid" +
-                    "from bid b, auction a" +
-                    "where  a.id = b.auction " +
-                    "and a.isRunning = 1" +
-                    "group by auction");
+            preparedStatement = connection.prepareStatement("SELECT b.id,b.user,b.auction,b.amount,b.bidDate " +
+                    " FROM bid b,auction a " +
+                    " WHERE amount=(SELECT MAX(amount) " +
+                    "    FROM bid WHERE auction=b.auction) " +
+                    " and a.id = b.auction and  a.isRunning = 1");
 
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 Bid bid = new Bid();
                 bid.setUser(resultSet.getLong("user"));
+
+                bid.setAmount(resultSet.getDouble("amount"));
+                bid.setBidDate(resultSet.getDate("bidDate"));
+                bid.setId(resultSet.getLong("id"));
+
                 bid.setAuction(resultSet.getLong("auction"));
-                bid.setAmount(resultSet.getDouble("currentWinningBid"));
 
                 bids.add(bid);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return bids;
+    }
+
+
+    private List<Bid> calculateWinningBid() {
+        List<Bid> bids = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = ConnectionConfiguration.getConnection();
+            preparedStatement = connection.prepareStatement("SELECT b.id,b.user,b.auction,b.amount,b.bidDate " +
+                    " FROM bid b,auction a " +
+                    " WHERE amount=(SELECT MAX(amount) " +
+                    "    FROM bid WHERE auction=b.auction) " +
+                    " and a.isRunning = 0 and a.endDate = curdate()");
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Bid b = new Bid();
+
+                b.setAuction(resultSet.getLong("auction"));
+                b.setAmount(resultSet.getDouble("amount"));
+                b.setBidDate(resultSet.getDate("bidDate"));
+                b.setId(resultSet.getLong("id"));
+                b.setUser(resultSet.getLong("user"));
+
+                bids.add(b);
             }
 
         } catch (Exception e) {
@@ -376,11 +432,12 @@ public class AuctionServiceImpl implements AuctionService {
         try {
             connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection
-                    .prepareStatement("update bidauction set currentWinner =?" +
-                            "where auctionId = ?");
+                    .prepareStatement("update auction set currentWinner = ?, currentWinningBid = ?" +
+                            "  where id = ? ");
 
             preparedStatement.setLong(1, bid.getUser());
-            preparedStatement.setLong(2, bid.getAuction());
+            preparedStatement.setLong(2, bid.getId());
+            preparedStatement.setLong(3, bid.getAuction());
 
 
             preparedStatement.executeUpdate();

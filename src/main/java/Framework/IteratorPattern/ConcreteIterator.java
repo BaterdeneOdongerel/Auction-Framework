@@ -33,7 +33,7 @@ public class ConcreteIterator<T> implements Aggregate {
             // return next element in the array and increment pos
             if (hasNext()) {
                 T t = iList.get(pos++);
-                iList.add(t);
+                //iList.add(t);
                 //  pos++;
                 return t;
             }
