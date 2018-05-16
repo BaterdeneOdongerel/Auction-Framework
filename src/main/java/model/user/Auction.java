@@ -4,21 +4,19 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
+
 
 @Data
 public class Auction {
-    private int id;
+
+    private long id;
     private Date startDate;
     private Date endDate;
     private BigDecimal minimumPrice;
-    private User bidOwner;
-    private boolean isRunning;
-    private User currentWinner;
-    private Bid currentWinningBid;
-    private User winner;
-    private List<Bid> bids;
 
-    //private Product product;
+    private long bidOwner;
+    private boolean isRunning;
+
+    private long product;
 }
 
