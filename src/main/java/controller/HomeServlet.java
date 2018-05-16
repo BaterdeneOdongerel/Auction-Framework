@@ -20,7 +20,7 @@ public class HomeServlet extends BaseServlet {
 
         AuctionServiceImpl auctionServiceImpl = new AuctionServiceImpl();
         List<Auction> auctions = auctionServiceImpl.selectRunning();
-        request.setAttribute("auctions" , auctions);
+        request.setAttribute("auctions", auctions);
 
         RequestDispatcher view = request.getRequestDispatcher("index.jsp");
         view.forward(request, response);
