@@ -6,6 +6,8 @@ import Framework.IteratorPattern.Iterator;
 import db.ConnectionConfiguration;
 import model.user.Auction;
 import model.user.Bid;
+import model.user.Category;
+import model.user.Product;
 import model.user.Report.AuctionReport;
 import org.springframework.stereotype.Service;
 import utils.Utils;
@@ -24,15 +26,10 @@ import java.util.List;
 public class AuctionServiceImpl implements AuctionService {
     public static void main(String arg[]) throws ParseException {
         AuctionServiceImpl a = new AuctionServiceImpl();
-        Date d = Date.valueOf("2018-05-15");
-        Date d1 = Date.valueOf("2018-05-16");
-        List<AuctionReport> getLists = a.selectAuctionReport(d, d1, true);
-
-
-        for (AuctionReport b : getLists) {
-            System.out.println("Bid Owner:" + b.getBidOwner() + "  " + b.getBidUser() + " bid amount:" + b.getBidAmount());
+        List<Auction> ls = a.selectRunning();
+        for (Auction ac : ls) {
+            System.out.println("-------->" + ac.getId() + " " + ac.getProduct());
         }
-
         //a.processCurrentWinningBid();
         //ConcreteIterator auctionList = new ConcreteIterator(getLists);
         //Iterator auctionIterator = auctionList.getIterator();
@@ -49,8 +46,111 @@ public class AuctionServiceImpl implements AuctionService {
 
     }
 
+
+    @Override
+    public void processCurrentWinningBid() {
+
+    }
+
+    @Override
+    public AuctionReport calculateWinningBid(List<AuctionReport> auctions) {
+        return null;
+    }
+
+    @Override
+    public List<AuctionReport> selectAuctionReport(Date startDate, Date endDate, boolean isRunning) {
+        return null;
+    }
+
+    @Override
+    public List<Auction> selectRunning() {
+        List<Auction> auctions = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = ConnectionConfiguration.getConnection();
+            preparedStatement = connection.prepareStatement("select a.* , p.id as pid , p.name , p.desc from auction a inner join product p on a.product = p.id where isrunning = 1");
+            resultSet = preparedStatement.executeQuery();
+
+            while ( resultSet.next() ) {
+
+                Auction auction = new Auction();
+                auction.setId(resultSet.getInt("id"));
+                auction.setMinimumPrice(resultSet.getDouble("minimumPrice"));
+                auction.setStartDate(resultSet.getDate("startDate"));
+                auction.setEndDate(resultSet.getDate("endDate"));
+                auction.setRunning(resultSet.getBoolean("isrunning"));
+                auction.setProduct(resultSet.getInt("product"));
+                auction.setCurrentWinner(resultSet.getInt("currentWinner"));
+                auction.setCurrentWinningBid(resultSet.getInt("currentWinningBid"));
+                auction.setWinner(resultSet.getInt("winner"));
+                auction.current_product = new Product();
+                auction.current_product.setId(resultSet.getInt("pid"));
+                auction.current_product.setName(resultSet.getString("name"));
+                auction.current_product.setDesc(resultSet.getString("desc"));
+                auctions.add(auction);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return auctions;
+    }
+
+    @Override
+    public void create(Auction auction) {
+
+    }
+
     @Override
     public Auction selectById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Auction> selectAll() {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void update(Auction auction, int id) {
+
+    }
+    /*
+
+    @Override
+    public Auction selectById(int id) {
+
         Auction auction = new Auction();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -313,6 +413,7 @@ public class AuctionServiceImpl implements AuctionService {
         //return  null;
     }
 
+
     private List<Bid> currentWinningBid() {
         List<Bid> bids = new ArrayList<>();
         Connection connection = null;
@@ -431,6 +532,6 @@ public class AuctionServiceImpl implements AuctionService {
         }
 
         return null;
-    }
+    }*/
 }
 
