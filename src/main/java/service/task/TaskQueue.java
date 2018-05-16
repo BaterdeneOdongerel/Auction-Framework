@@ -1,5 +1,6 @@
 package service.task;
 
+import org.omg.PortableInterceptor.INACTIVE;
 import utils.Utils;
 
 import java.time.LocalDate;
@@ -10,40 +11,38 @@ import java.util.LinkedList;
 /**
  * Created by Van Phan <vanthuyphan@gmail.com> on 5/15/18.
  */
-public enum TaskQueue implements Runnable {
+public class TaskQueue extends Thread {
 
-    TASK_QUEUE;
+
+    private static TaskQueue INSTANCE;
+    private static Object MUTEX = new Object();
     private LinkedList<TimerTask> tasks = new LinkedList<>();
 
     private TaskQueue() {
-        new Runnable() {
-            @Override
-            public void run() {
-                TaskQueue.this.run();
+    }
+
+    public static TaskQueue getInstance() {
+        synchronized (MUTEX) {
+            if (INSTANCE == null) {
+                INSTANCE = new TaskQueue();
             }
-        }.run();
+            return INSTANCE;
+        }
     }
 
     @Override
     public void run() {
         while (true) {
             try {
-            if (tasks.isEmpty()) {
-                Thread.sleep(1000);
-            } else {
-                service.task.TimerTask task = tasks.peekFirst();
-                System.out.println("Checking time");
-                if (Utils.isTime(task.getExecuteTime())) {
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            task.run();
-                        }
-                    }.run();
-                    tasks.remove(task);
+                synchronized (tasks) {
+                    while (tasks.isEmpty()) tasks.wait();
+                    service.task.TimerTask task = tasks.peek();
+                    if (Utils.isTime(task.getExecuteTime())) {
+                        ((Runnable) () -> task.run()).run();
+                        tasks.remove(task);
+                    }
                 }
-            }
-            Thread.sleep(1000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -51,30 +50,31 @@ public enum TaskQueue implements Runnable {
     }
 
     public void addTask(TimerTask task) {
-        System.out.println("Adding tasks");
-        tasks.add(task);
-        run();
+        synchronized (tasks) {
+            tasks.add(task);
+            tasks.notify();
+        }
     }
 
     public void removeTask(TimerTask task) {
         tasks.remove(task);
     }
 
-    public static void main(String[] args) {
-
-        TASK_QUEUE.addTask(new TimerTask(LocalDateTime.of(LocalDate.of(2018, 5, 15), LocalTime.of(12, 41, 10))) {
+    /*public static void main(String[] args) {
+        TaskQueue queue = TaskQueue.getInstance();
+        queue.start();
+        queue.addTask(new TimerTask(LocalDateTime.of(LocalDate.of(2018, 5, 16), LocalTime.of(10, 43, 10))) {
             @Override
             public void _run() {
                 System.out.println("Second");
             }
         });
-
-        TASK_QUEUE.addTask(new TimerTask(LocalDateTime.of(LocalDate.of(2018, 5, 15), LocalTime.of(12, 42, 10))) {
+        queue.addTask(new TimerTask(LocalDateTime.of(LocalDate.of(2018, 5, 16), LocalTime.of(10, 44, 10))) {
             @Override
             public void _run() {
                 System.out.println("First");
             }
         });
 
-    }
+    }*/
 }

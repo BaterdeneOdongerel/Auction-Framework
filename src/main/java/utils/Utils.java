@@ -50,7 +50,6 @@ public class Utils {
 
     public static boolean isTime(LocalDateTime date) {
         LocalDateTime now = LocalDateTime.now();
-        //return date.isAfter(now.minusMinutes(1)) && date.isBefore(now.plusMinutes(1));
-        return true;
+        return date.isAfter(now.minusMinutes(1)) && date.isBefore(now.plusMinutes(1));
     }
 }
