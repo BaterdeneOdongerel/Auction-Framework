@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 public class Utils {
@@ -44,5 +46,10 @@ public class Utils {
         String param = request.getParameter(name);
         boolean hasValue = param != null && !param.isEmpty();
         return hasValue ? Integer.parseInt(param) : defaultValue;
+    }
+
+    public static boolean isTime(LocalDateTime date) {
+        LocalDateTime now = LocalDateTime.now();
+        return date.isAfter(now.minusMinutes(1)) && date.isBefore(now.plusMinutes(1));
     }
 }

@@ -52,6 +52,9 @@ footer {
 .column > p {
     font-style: italic;
 }
+.column > p > span{
+    float: right;
+}
 .column > h5 {
     text-align: center;
 }
