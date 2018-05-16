@@ -38,7 +38,7 @@ footer {
 }
 .column {
     float: left;
-    width: 22%;
+    width: 32%;
     padding: 5px;
     margin: 5px;
     border: 1px solid #ddd;
@@ -55,7 +55,9 @@ footer {
 .column > h5 {
     text-align: center;
 }
-
+.column > h5 > span:last-child{
+    float : right;
+}
 .col-centered{
     float: none;
     margin: 0 auto;
