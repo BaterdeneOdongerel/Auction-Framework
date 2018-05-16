@@ -24,7 +24,91 @@
 
 
   <div class="container">
-    <a href="temp.jsp">  template to use</a>
+
+    <h3>Auction going on</h3>
+
+
+
+    <div class="row">
+      <div class="column" id="1">
+        <h5>Auction title
+          <span event="joined" class="label label-success">1</span>
+          <span event="joined" class="label label-warning">100$</span>
+        </h5>
+
+        <div class="desc">
+          here ad wld ledp sedl sep' lds'ep l'p lf lls 'elfff l'
+        </div>
+        <p> start date </p>
+        <p> end date </p>
+
+        <span class="label label-info">Going on</span>
+        <a><button type="button" event="edit" class="btn btn-primary btn-sm" data-event="id_event" data-user="user_id">Bid</button></a>
+      </div>
+      <div class="column" id="1">
+        <h5>Auction title
+          <span event="joined" class="label label-success">2</span>
+          <span event="joined" class="label label-warning">250$</span>
+        </h5>
+        <div class="desc">
+          here ad wld ledp sedl sep' lds'ep l'p lf lls 'elfff l'
+        </div>
+        <p> start date </p>
+        <p> end date </p>
+
+        <span class="label label-info">Going on</span>
+        <a><button type="button" event="edit" class="btn btn-primary btn-sm" data-event="id_event" data-user="user_id">Bid</button></a>
+      </div>
+      <div class="column" id="1">
+        <h5>Auction title
+          <span event="joined" class="label label-success">3</span>
+          <span event="joined" class="label label-warning">1050$</span>
+        </h5>
+        <div class="desc">
+          here ad wld ledp sedl sep' lds'ep l'p lf lls 'elfff l'
+        </div>
+        <p> start date </p>
+        <p> end date </p>
+
+        <span class="label label-info">Going on</span>
+        <a><button type="button" event="edit" class="btn btn-primary btn-sm" data-event="id_event" data-user="user_id">Bid</button></a>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="column" id="1">
+        <h5>Auction title
+          <span event="joined" class="label label-success">4</span>
+          <span event="joined" class="label label-warning">1030$</span>
+        </h5>
+        <div class="desc">
+          here ad wld ledp sedl sep' lds'ep l'p lf lls 'elfff l'
+        </div>
+        <p> start date </p>
+        <p> end date </p>
+
+        <span class="label label-info">Going on</span>
+        <a><button type="button" event="edit" class="btn btn-primary btn-sm" data-event="id_event" data-user="user_id">Bid</button></a>
+      </div>
+      <div class="column" id="1">
+        <h5>Auction title
+          <span event="joined" class="label label-success">5</span>
+          <span event="joined" class="label label-warning">2500$</span>
+        </h5>
+        <div class="desc">
+          here ad wld ledp sedl sep' lds'ep l'p lf lls 'elfff l'
+        </div>
+        <p> start date </p>
+        <p> end date </p>
+
+        <span class="label label-info">Going on</span>
+        <a><button type="button" event="edit" class="btn btn-primary btn-sm" data-event="id_event" data-user="user_id">Bid</button></a>
+      </div>
+
+
+    </div>
+
+
   </div>
 
 
