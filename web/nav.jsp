@@ -20,8 +20,7 @@
                     <c:if test="${not empty user}">
                         <li class="active"><a href="/">Home</a></li>
                         <li><a href="list_category">Categories</a></li>
-
-                        <li><a href="create">Create event</a></li>
+                        <li><a href="admin">Admin</a></li>
                     </c:if>
 
                 </ul>

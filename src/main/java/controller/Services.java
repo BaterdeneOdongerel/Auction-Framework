@@ -1,8 +1,7 @@
 package controller;
 
 
-import service.UserService;
-import service.UserServiceImpl;
+import service.*;
 
 /**
  * Created by admin on 4/23/18.
@@ -10,8 +9,13 @@ import service.UserServiceImpl;
 public class Services {
 
     public static UserService UserService;
+    public static service.AuctionService AuctionService;
+    public static service.ProductService ProductService;
 
     static {
         UserService = new UserServiceImpl();
+        AuctionService = new AuctionServiceImpl();
+        ProductService = new ProductServiceImp();
     }
+
 }

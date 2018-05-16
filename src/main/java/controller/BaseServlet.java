@@ -45,14 +45,19 @@ public abstract class BaseServlet extends HttpServlet {
     }
 
     private boolean filterRequest(HttpServletRequest request, HttpServletResponse response) {
-        if (!(request.getRequestURI().equals("/login") || request.getRequestURI().equals("/signup"))) {
-            if (request.getSession().getAttribute("user") == null)
-                try {
+        try {
+            if (request.getRequestURI().equals("/")) {
+                response.sendRedirect("/");
+                return false;
+            }
+            if (!(request.getRequestURI().equals("/login") || request.getRequestURI().equals("/signup"))) {
+                if (request.getSession().getAttribute("user") == null)
+
                     response.sendRedirect("/login");
-                    return false;
-                } catch (Exception ex) {
-                    return false;
-                }
+                return false;
+            }
+        } catch (Exception ex) {
+            return false;
         }
         return true;
     }

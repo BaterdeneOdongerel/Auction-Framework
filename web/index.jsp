@@ -9,109 +9,159 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
-  <head>
-    <head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="ShapedTheme">
 
-      <title>Cycla</title>
-      <jsp:include page="header.jsp" />
+  <!-- favicon icon -->
+  <link rel="shortcut icon" href="assets/images/">
 
-    </head>
-  </head>
-  <body>
+  <title></title>
 
+  <!-- common css -->
+  <link rel="stylesheet" href="public/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="public/assets/css/font-awesome.min.css">
+  <link rel="stylesheet" href="public/assets/css/animate.min.css">
+  <link rel="stylesheet" href="public/assets/css/owl.carousel.css">
+  <link rel="stylesheet" href="public/assets/css/owl.theme.css">
+  <link rel="stylesheet" href="public/css/style.css">
+  <link rel="stylesheet" href="public/assets/css/responsive.css">
 
-  <jsp:include page="nav.jsp" />
+  <!-- HTML5 shim and Respond.js IE9 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="public/assets/js/html5shiv.js"></script>
+  <script src="public/assets/js/respond.js"></script>
+  <![endif]-->
+</head>
 
+<body>
 
-  <div class="container">
-
-    <h3>Auction going on</h3>
-
-
-
-    <div class="row">
-      <div class="column" id="1">
-        <h5>Auction title
-          <span event="joined" class="label label-success">1</span>
-          <span event="joined" class="label label-warning">100$</span>
-        </h5>
-
-        <div class="desc">
-          here ad wld ledp sedl sep' lds'ep l'p lf lls 'elfff l'
-        </div>
-        <p> start date </p>
-        <p> end date </p>
-
-        <span class="label label-info">Going on</span>
-        <a><button type="button" event="edit" class="btn btn-primary btn-sm" data-event="id_event" data-user="user_id">Bid</button></a>
-      </div>
-      <div class="column" id="1">
-        <h5>Auction title
-          <span event="joined" class="label label-success">2</span>
-          <span event="joined" class="label label-warning">250$</span>
-        </h5>
-        <div class="desc">
-          here ad wld ledp sedl sep' lds'ep l'p lf lls 'elfff l'
-        </div>
-        <p> start date </p>
-        <p> end date </p>
-
-        <span class="label label-info">Going on</span>
-        <a><button type="button" event="edit" class="btn btn-primary btn-sm" data-event="id_event" data-user="user_id">Bid</button></a>
-      </div>
-      <div class="column" id="1">
-        <h5>Auction title
-          <span event="joined" class="label label-success">3</span>
-          <span event="joined" class="label label-warning">1050$</span>
-        </h5>
-        <div class="desc">
-          here ad wld ledp sedl sep' lds'ep l'p lf lls 'elfff l'
-        </div>
-        <p> start date </p>
-        <p> end date </p>
-
-        <span class="label label-info">Going on</span>
-        <a><button type="button" event="edit" class="btn btn-primary btn-sm" data-event="id_event" data-user="user_id">Bid</button></a>
-      </div>
-
-    </div>
-    <div class="row">
-      <div class="column" id="1">
-        <h5>Auction title
-          <span event="joined" class="label label-success">4</span>
-          <span event="joined" class="label label-warning">1030$</span>
-        </h5>
-        <div class="desc">
-          here ad wld ledp sedl sep' lds'ep l'p lf lls 'elfff l'
-        </div>
-        <p> start date </p>
-        <p> end date </p>
-
-        <span class="label label-info">Going on</span>
-        <a><button type="button" event="edit" class="btn btn-primary btn-sm" data-event="id_event" data-user="user_id">Bid</button></a>
-      </div>
-      <div class="column" id="1">
-        <h5>Auction title
-          <span event="joined" class="label label-success">5</span>
-          <span event="joined" class="label label-warning">2500$</span>
-        </h5>
-        <div class="desc">
-          here ad wld ledp sedl sep' lds'ep l'p lf lls 'elfff l'
-        </div>
-        <p> start date </p>
-        <p> end date </p>
-
-        <span class="label label-info">Going on</span>
-        <a><button type="button" event="edit" class="btn btn-primary btn-sm" data-event="id_event" data-user="user_id">Bid</button></a>
+<!-- header area-->
+<header>
+  <div class="welcome-text-area">
+    <div class="container">
+      <div class="pull-left welcome-text">
+        <p>Welcome to Auction X <a href="/login">Sign in</a> or <a href="signup">Register</a></p>
       </div>
 
 
     </div>
-
-
   </div>
 
 
+</header>
 
-  </body>
+<!-- home area-->
+<section id="home">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-1 col-md-7">
+        <div class="home-content">
+          <h2 class="text-uppercase">Auction <span>X</span></h2>
+          <h3 class="text">Latest trendy clothes with a price of your next coffee cup</h3>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="arrival-area">
+  <div class="container">
+
+    <div class="arrival-menu">
+      <div class="pull-left arrival-text">
+        <h3 class="text-uppercase">Products</h3>
+      </div>
+      <div class="nav-center text-uppercase">
+        <ul class="nav  nav-pills text-center">
+
+          <li class="active"><a data-toggle="tab" href="#men"> MEN</a></li>
+          <li><a data-toggle="tab" href="#women">WOMEN</a></li>
+          <li><a data-toggle="tab" href="#accesories">ACCESSORIES</a></li>
+          <li><a data-toggle="tab" href="#kid"> KID</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- arrival tab area-->
+<div class="container">
+  <div class="row">
+    <div class="tab-content">
+      <div id="men" class="tab-pane fade in active">
+        <div class="arrival-item">
+          <div>
+            <div class="single-product-area">
+              <div class="single-shop">
+                <a href="single-shop.html">
+                  <img src="public/assets/images/product-1.jpg" alt="">
+                </a>
+                <div class="shop-icon">
+                  <ul>
+                    <li><a href="single-shop.html"> <i class="fa fa-cart-plus"></i> </a></li>
+                    <li><a href=""> <i class="fa fa-heart-o"></i></a></li>
+                    <li><a href="single-shop.html"> <i class="fa fa-chain"></i></a></li>
+                  </ul>
+
+                </div>
+
+              </div>
+              <div class="single_featured_label text-center">
+                <h3>Test</h3>
+                <h4>
+                  <p>Test</p>
+
+                </h4>
+                <a href="single-shop.html" class="add-cart text-uppercase"> Bid</a>
+              </div>
+            </div>
+            <c:forEach items="${products}" var="p">
+              <div class="single-product-area">
+                <div class="single-shop">
+                  <a href="single-shop.html">
+                    <img src="public/assets/images/product-1.jpg" alt="">
+                  </a>
+                  <div class="shop-icon">
+                    <ul>
+                      <li><a href="single-shop.html"> <i class="fa fa-cart-plus"></i> </a></li>
+                      <li><a href=""> <i class="fa fa-heart-o"></i></a></li>
+                      <li><a href="single-shop.html"> <i class="fa fa-chain"></i></a></li>
+                    </ul>
+
+                  </div>
+
+                </div>
+                <div class="single_featured_label text-center">
+                  <h3>{p.name}</h3>
+                  <h4>
+                    <del>{p.bid_price}</del>
+
+                  </h4>
+                  <a href="single-shop.html" class="add-cart text-uppercase"> Bid</a>
+                </div>
+              </div>
+            </c:forEach>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="copy text-center">
+  <p>&copy; 2018 Advanced Software Development</p>
+</footer>
+<!-- js files -->
+<script type="text/javascript" src="public/assets/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="public/assets/js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="public/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="public/assets/js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="public/assets/js/jquery.countdown.min.js"></script>
+<script type="text/javascript" src="public/assets/js/jquery.scrollUp.min.js"></script>
+<script type="text/javascript" src="public/assets/js/scripts.js"></script>
+
+</body>
 </html>
