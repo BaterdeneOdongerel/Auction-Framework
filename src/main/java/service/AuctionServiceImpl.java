@@ -46,21 +46,6 @@ public class AuctionServiceImpl implements AuctionService {
 
 
     @Override
-    public void processCurrentWinningBid() {
-
-    }
-
-    @Override
-    public AuctionReport calculateWinningBid(List<AuctionReport> auctions) {
-        return null;
-    }
-
-    @Override
-    public List<AuctionReport> selectAuctionReport(Date startDate, Date endDate, boolean isRunning) {
-        return null;
-    }
-
-    @Override
     public List<Auction> selectRunning() {
         List<Auction> auctions = new ArrayList<>();
         Connection connection = null;
@@ -72,7 +57,7 @@ public class AuctionServiceImpl implements AuctionService {
             preparedStatement = connection.prepareStatement("select a.* , p.id as pid , p.name , p.desc from auction a inner join product p on a.product = p.id where isrunning = 1");
             resultSet = preparedStatement.executeQuery();
 
-            while ( resultSet.next() ) {
+            while (resultSet.next()) {
 
                 Auction auction = new Auction();
                 auction.setId(resultSet.getInt("id"));
@@ -121,34 +106,7 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public void create(Auction auction) {
-
-    }
-
-    @Override
     public Auction selectById(int id) {
-        return null;
-    }
-
-    @Override
-    public List<Auction> selectAll() {
-        return null;
-    }
-
-    @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
-    public void update(Auction auction, int id) {
-
-    }
-    /*
-
-    @Override
-    public Auction selectById(int id) {
-
         Auction auction = new Auction();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -165,7 +123,7 @@ public class AuctionServiceImpl implements AuctionService {
                 auction.setStartDate(resultSet.getDate("startDate"));
                 auction.setEndDate(resultSet.getDate("endDate"));
                 auction.setRunning(resultSet.getBoolean("isRunning"));
-                auction.setMinimumPrice(resultSet.getBigDecimal("minimumPrice"));
+                auction.setMinimumPrice(resultSet.getDouble("minimumPrice"));
                 auction.setCurrentWinner(resultSet.getLong("currentWinner"));
                 auction.setCurrentWinningBid(resultSet.getLong("currentWinningBid"));
                 auction.setWinner(resultSet.getLong("winner"));
@@ -253,7 +211,7 @@ public class AuctionServiceImpl implements AuctionService {
 
             preparedStatement.setDate(1, auction.getStartDate());
             preparedStatement.setDate(2, auction.getEndDate());
-            preparedStatement.setBigDecimal(3, auction.getMinimumPrice());
+            preparedStatement.setDouble(3, auction.getMinimumPrice());
             preparedStatement.setLong(4, auction.getBidOwner());
 
             preparedStatement.setBoolean(5, auction.isRunning());//TODO this should be default
@@ -294,7 +252,7 @@ public class AuctionServiceImpl implements AuctionService {
 
             preparedStatement.setDate(1, auction.getStartDate());
             preparedStatement.setDate(2, auction.getEndDate());
-            preparedStatement.setBigDecimal(3, auction.getMinimumPrice());
+            preparedStatement.setDouble(3, auction.getMinimumPrice());
             preparedStatement.setLong(4, auction.getBidOwner());
 
             preparedStatement.setBoolean(5, auction.isRunning());
@@ -410,7 +368,6 @@ public class AuctionServiceImpl implements AuctionService {
         return auctions;
         //return  null;
     }
-
 
     private List<Bid> currentWinningBid() {
         List<Bid> bids = new ArrayList<>();
@@ -591,6 +548,8 @@ public class AuctionServiceImpl implements AuctionService {
         }
 
         return null;
-    }*/
+    }
+
+
 }
 
