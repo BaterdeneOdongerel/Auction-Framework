@@ -24,4 +24,6 @@ public interface AuctionService extends CrudTemplate<Auction> {
     AuctionReport calculateWinningBid(List<AuctionReport> auctions);
 
     List<AuctionReport> selectAuctionReport(Date startDate, Date endDate, boolean isRunning);
+
+    List<Auction> selectRunning();
 }
