@@ -21,9 +21,11 @@
         <div class="body_content text-left col-sm-7">
             <h3>Edit Product</h3>
 
-            <form class="form-horizontal" action="/edit_product" method="post">
+            <form class="form-horizontal" action="/edit_product" method="post" enctype = "multipart/form-data">
 
                 <input type="hidden" value="${product.id}" name="id" class="form-control" id="id"/>
+                <img src="${product.imagePath}" width="200" height="200"/>
+                <input type = "file" name = "file" size = "50" />
 
                 <div class="form-group">
 
@@ -44,8 +46,7 @@
                 </div>
 
                 <input type="hidden" value="${product.catid}" name="catid" class="form-control" id="catid"/>
-                <input type="hidden" value="${product.user}" name="user" class="form-control" id="user"/>
-                <input type="hidden" value="${product.bid_price}" name="bid_price" class="form-control" id="bid_price"/>
+
 
 
                 <div class="form-group">

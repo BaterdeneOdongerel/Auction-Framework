@@ -32,8 +32,7 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>User won bid</th>
-            <th>bid price</th>
+            <th>image</th>
             <th>Status</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -46,8 +45,7 @@
 
                 <td>${p.name}</td>
                 <td>${p.desc}</td>
-                <td>${p.user}</td>
-                <td>${p.bid_price}</td>
+                <td><img src="${p.imagePath}" width="50" height="50" /></td>
                 <td>status</td>
 
                 <td><a href="/edit_product?id=${p.id}&catid=${catid}"> edit </a> </td>
