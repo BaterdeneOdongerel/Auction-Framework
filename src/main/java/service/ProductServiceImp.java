@@ -3,6 +3,7 @@ package service;
 import db.ConnectionConfiguration;
 import model.user.Auction;
 import model.user.Category;
+import model.user.LabelValue;
 import model.user.Product;
 
 import java.sql.*;
@@ -342,5 +343,21 @@ public class ProductServiceImp implements ProductService {
         }
 
         return auctions;
+    }
+
+    @Override
+    public List<LabelValue> getProductListForDropDown() {
+        List<LabelValue> selectItems = new ArrayList<>();
+
+        for (Product p : selectAll()) {
+
+            LabelValue l = new LabelValue();
+            l.setLabel(p.getName());
+            l.setValue(p.getId());
+            selectItems.add(l);
+
+        }
+
+        return selectItems;
     }
 }

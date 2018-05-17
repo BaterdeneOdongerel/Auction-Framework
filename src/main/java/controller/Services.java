@@ -9,8 +9,8 @@ import service.*;
 public class Services {
 
     public static UserService UserService;
-    public static service.AuctionService AuctionService;
-    public static service.ProductService ProductService;
+    public static AuctionService AuctionService;
+    public static ProductService ProductService;
 
     static {
         UserService = new UserServiceImpl();

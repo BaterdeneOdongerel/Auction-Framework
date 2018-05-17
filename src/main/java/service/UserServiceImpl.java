@@ -2,6 +2,7 @@ package service;
 
 
 import db.ConnectionConfiguration;
+import model.user.LabelValue;
 import model.user.User;
 import org.springframework.stereotype.Service;
 import props.MessagesProp;
@@ -339,6 +340,23 @@ public class UserServiceImpl implements UserService {
 
     public User getCurrentUser() {
         return currentUser;
+    }
+
+    @Override
+    public List<LabelValue> getUserListForDropDown() {
+        List<LabelValue> selectItems = new ArrayList<>();
+
+        for (User u : selectAll()) {
+
+            LabelValue l = new LabelValue();
+            l.setLabel(u.getFirstName() + " " + u.getLastName());
+            l.setValue(u.getUserId());
+            selectItems.add(l);
+
+
+        }
+
+        return selectItems;
     }
 
     @Override

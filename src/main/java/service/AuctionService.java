@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface AuctionService extends CrudTemplate<Auction> {
 
+
     void processCurrentWinningBid();
 
     AuctionReport calculateWinningBid(List<AuctionReport> auctions);

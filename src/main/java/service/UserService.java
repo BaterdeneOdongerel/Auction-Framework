@@ -1,6 +1,7 @@
 package service;
 
 
+import model.user.LabelValue;
 import model.user.User;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface UserService extends CrudTemplate<User> {
     List<User> selectByName(String name);
 
     User getCurrentUser();
+
+    List<LabelValue> getUserListForDropDown();
 }
