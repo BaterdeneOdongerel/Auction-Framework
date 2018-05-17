@@ -1,7 +1,6 @@
 package service;
 
-import model.user.Category;
-import model.user.User;
+import model.Category;
 
 public interface CategoryService extends CrudTemplate<Category> {
 

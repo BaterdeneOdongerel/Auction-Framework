@@ -1,4 +1,4 @@
-package model.user.Report;
+package model.Report;
 
 import lombok.Data;
 

@@ -10,14 +10,14 @@
             <a href="/list_product">Products</a>
         </li>
         <li>
-            <a href="/list_category">Caterory</a>
+            <a href="/list_category">Category</a>
         </li>
         <li>
-            <a href="/list_auction">Auction</a>
+            <a href="/auctions">Auction</a>
 
-            <a href="/list_auction">User</a>
+            <a href="/list_user">User</a>
 
-            <a href="/list_auction">History</a>
+            <a href="/list_event">History</a>
         </li>
     </ul>
 </div>

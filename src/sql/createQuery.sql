@@ -3,14 +3,14 @@ use auction_system;
 
 
 CREATE TABLE IF NOT EXISTS `User` (
-	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`user_id` BIGINT NOT NULL AUTO_INCREMENT,
 	`email` VARCHAR(100) UNIQUE,
 	`user_name` VARCHAR(20),
 	`first_name` VARCHAR(100),
 	`last_name` VARCHAR(100),
 	`password` VARCHAR(20),
     `communication` VARCHAR(200),
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`user_id`)
 ) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 insert into User(`email`, `user_name`, `first_name`, `last_name`, `password`) values ('vanthuyphan@gmail.com', 'vanthuyphan', 'van', 'phan', '123456');
