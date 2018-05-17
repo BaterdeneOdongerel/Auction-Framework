@@ -1,5 +1,7 @@
 package controller;
 
+import org.apache.commons.fileupload.FileUploadException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -59,6 +61,6 @@ public abstract class BaseServlet extends HttpServlet {
 
     protected abstract void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
-    protected abstract void post(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+    protected abstract void post(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 }
