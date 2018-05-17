@@ -85,14 +85,7 @@ public class EditProductServlet extends BaseServlet {
             }
         }
 
-
-
-        System.out.println("=========>" + latestFileName + "===");
-
         ProductServiceImp productServiceImp = new ProductServiceImp();
-
-
-
 
         Product product = new Product();
         product.setName(name);
@@ -100,12 +93,9 @@ public class EditProductServlet extends BaseServlet {
         product.setCatid(Integer.parseInt(catid));
 
         if ( sid == null || "-1".equals(sid) ) { // create
-            System.out.println("HERHEHRHERHERHERHER");
             product.setImagePath(latestFileName);
             productServiceImp.create(product);
-            System.out.println("CCCCCCCCCCCCCCCCCCc");
         } else { // update
-            System.out.println("WWWWWWWWWWWWWWWWWWW");
             if ( latestFileName.length() > 1 ) {
                 product.setImagePath(latestFileName);
             } else {
