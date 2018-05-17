@@ -33,9 +33,6 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container">
-            <a href="edit_category">
-                <button type="button" class="btn btn-primary btn-lg">Add Category</button>
-            </a>
             <table class="table table-striped">
                 <thead>
                 <tr>
