@@ -43,7 +43,6 @@ public abstract class BaseServlet extends HttpServlet {
             case "signup":
             case "home":
                 break;
-            case "admin":
             default:
                 boolean missingUser = request.getSession().getAttribute("user") == null;
                 if (missingUser) {

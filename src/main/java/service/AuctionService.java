@@ -1,8 +1,8 @@
 package service;
 
-import model.user.Auction;
+import model.Auction;
 
-import model.user.Report.AuctionReport;
+import model.Report.AuctionReport;
 
 import java.sql.Date;
 import java.util.List;

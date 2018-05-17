@@ -1,4 +1,4 @@
-<%@ page import="model.user.Auction" %>
+<%@ page import="model.Auction" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: user
@@ -107,9 +107,7 @@
                                             <li><a href=""> <i class="fa fa-heart-o"></i></a></li>
                                             <li><a href=""> <i class="fa fa-chain"></i></a></li>
                                         </ul>
-
                                     </div>
-
                                 </div>
                                 <div class="single_featured_label text-center">
                                     <h3>${p.name}</h3>

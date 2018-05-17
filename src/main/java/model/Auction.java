@@ -1,8 +1,7 @@
-package model.user;
+package model;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 
 

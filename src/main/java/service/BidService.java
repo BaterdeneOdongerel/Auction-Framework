@@ -1,9 +1,7 @@
 package service;
 
 
-import model.user.Bid;
-
-import java.util.List;
+import model.Bid;
 
 public interface BidService extends CrudTemplate<Bid> {
 

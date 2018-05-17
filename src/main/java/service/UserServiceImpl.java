@@ -4,6 +4,7 @@ package service;
 import db.ConnectionConfiguration;
 import model.user.LabelValue;
 import model.user.User;
+import model.User;
 import org.springframework.stereotype.Service;
 import props.MessagesProp;
 
@@ -272,7 +273,7 @@ public class UserServiceImpl implements UserService {
             User user = new User();
             user.setUserId(-1);
             while (resultSet.next()) {
-                user.setUserId(resultSet.getInt("id"));
+                user.setUserId(resultSet.getInt("user_id"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
                 user.setEmail(resultSet.getString("email"));

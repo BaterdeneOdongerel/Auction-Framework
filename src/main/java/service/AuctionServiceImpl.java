@@ -6,6 +6,10 @@ import Framework.IteratorPattern.Iterator;
 import db.ConnectionConfiguration;
 import model.user.*;
 import model.user.Report.AuctionReport;
+import model.Auction;
+import model.Bid;
+import model.Product;
+import model.Report.AuctionReport;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
