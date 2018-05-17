@@ -21,7 +21,7 @@ public class Services {
         AuctionService = new AuctionServiceImpl();
         ProductService = new ProductServiceImp();
         EventService = new EventServiceImpl();
-        communicator = new CommunicationServiceImpl();
+        //communicator = new CommunicationServiceImpl();
     }
 
 }

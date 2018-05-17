@@ -1,12 +1,13 @@
 package model;
 
 import lombok.Data;
-import org.joda.time.DateTime;
+
+import java.util.Date;
 
 @Data
 public class Event {
     private long id;
     private String name;
     private String content;
-    private DateTime created;
+    private Date created;
 }
