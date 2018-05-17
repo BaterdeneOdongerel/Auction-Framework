@@ -1,9 +1,7 @@
 package controller;
 
 
-import model.user.Category;
-import model.user.Product;
-import service.CategoryServiceImp;
+import model.Product;
 import service.ProductServiceImp;
 
 import javax.servlet.RequestDispatcher;

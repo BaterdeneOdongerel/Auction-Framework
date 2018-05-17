@@ -2,7 +2,7 @@ package controller;
 
 
 
-import model.user.User;
+import model.User;
 import props.MessagesProp;
 import service.UserServiceImpl;
 

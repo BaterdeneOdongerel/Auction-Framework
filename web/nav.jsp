@@ -18,8 +18,6 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
                     <c:if test="${not empty user}">
-                        <li class="active"><a href="/">Home</a></li>
-                        <li><a href="admin">Admin</a></li>
                     </c:if>
 
                 </ul>

@@ -1,7 +1,7 @@
 package controller;
 
 
-import model.user.Product;
+import model.Product;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;

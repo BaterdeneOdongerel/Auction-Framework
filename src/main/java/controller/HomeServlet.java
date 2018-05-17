@@ -1,9 +1,6 @@
 package controller;
 
-import model.user.Auction;
-import model.user.Product;
-import service.AuctionService;
-import service.AuctionServiceImpl;
+import model.Auction;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
