@@ -2,7 +2,6 @@ package service;
 
 import db.ConnectionConfiguration;
 import model.Event;
-import org.joda.time.DateTime;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -64,8 +63,9 @@ public class EventServiceImpl implements EventService {
                 event.setId(resultSet.getInt("id"));
                 event.setName(resultSet.getString("name"));
                 event.setContent(resultSet.getString("content"));
-                DateTime createdDate = new DateTime(resultSet.getTimestamp("content").getTime());
+                Date createdDate = new Date(resultSet.getTimestamp("created").getTime());
                 event.setCreated(createdDate);
+                events.add(event);
             }
 
         } catch (Exception e) {
