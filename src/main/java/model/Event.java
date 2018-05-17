@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 public class Event {
     private long id;
     private String name;
-    private String status;
     private String content;
     private DateTime created;
 }
