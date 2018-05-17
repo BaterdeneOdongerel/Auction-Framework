@@ -22,7 +22,7 @@ public class EventListingServlet extends BaseServlet {
     protected void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CategoryServiceImp categoryServiceImp = new CategoryServiceImp();
         List<Event> events = Services.EventService.selectAll();
-        request.setAttribute("events" , events);
+        request.setAttribute("events", events);
         RequestDispatcher view = request.getRequestDispatcher("list_event.jsp");
         view.forward(request, response);
     }

@@ -11,7 +11,8 @@
 <html>
 <head>
     <title>Auction</title>
-    <jsp:include page="header.jsp" /><title>Auction</title>
+    <jsp:include page="header.jsp"/>
+    <title>Auction</title>
     <script src="public/assets/js/jquery.min.js"></script>
     <script src="public/assets/bootstrap.bundle.min.js"></script>
     <link href="public/assets/css/bootstrap.css" rel="stylesheet">
@@ -21,7 +22,7 @@
 <body>
 
 
-<jsp:include page="nav.jsp" />
+<jsp:include page="nav.jsp"/>
 
 
 <div id="wrapper">
@@ -46,7 +47,7 @@
                     <tr>
                         <td>${user.firstName}</td>
                         <td>${user.email}</td>
-                        <td><a href="/edit_category?delete_id=${cat.id}"> delete </a> </td>
+                        <td><a href="/edit_category?delete_id=${cat.id}"> delete </a></td>
                     </tr>
                 </c:forEach>
 
@@ -58,7 +59,6 @@
     <!-- /#page-content-wrapper -->
 
 </div>
-
 
 
 </body>

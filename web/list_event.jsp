@@ -11,7 +11,8 @@
 <html>
 <head>
     <title>Auction</title>
-    <jsp:include page="header.jsp" /><title>Auction</title>
+    <jsp:include page="header.jsp"/>
+    <title>Auction</title>
     <script src="public/assets/js/jquery.min.js"></script>
     <script src="public/assets/bootstrap.bundle.min.js"></script>
     <link href="public/assets/css/bootstrap.css" rel="stylesheet">
@@ -21,7 +22,7 @@
 <body>
 
 
-<jsp:include page="nav.jsp" />
+<jsp:include page="nav.jsp"/>
 
 
 <div id="wrapper">
@@ -42,7 +43,6 @@
                 </tr>
                 </thead>
                 <tbody>
-
 
 
                 <c:forEach items="${events}" var="event">

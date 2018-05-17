@@ -2,8 +2,8 @@ package service;
 
 
 import db.ConnectionConfiguration;
-import model.user.LabelValue;
-import model.user.User;
+import model.LabelValue;
+
 import model.User;
 import org.springframework.stereotype.Service;
 import props.MessagesProp;

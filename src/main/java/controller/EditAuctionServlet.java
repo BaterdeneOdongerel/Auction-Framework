@@ -1,7 +1,7 @@
 package controller;
 
 
-import model.user.Auction;
+import model.Auction;
 import service.AuctionService;
 import service.ProductService;
 import service.UserService;

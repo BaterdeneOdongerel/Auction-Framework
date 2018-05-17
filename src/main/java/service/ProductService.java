@@ -1,8 +1,8 @@
 package service;
 
-import model.user.Auction;
-import model.user.LabelValue;
-import model.user.Product;
+
+import model.LabelValue;
+
 import model.Auction;
 import model.Product;
 

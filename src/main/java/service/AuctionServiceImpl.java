@@ -4,8 +4,8 @@ package service;
 import Framework.IteratorPattern.ConcreteIterator;
 import Framework.IteratorPattern.Iterator;
 import db.ConnectionConfiguration;
-import model.user.*;
-import model.user.Report.AuctionReport;
+import model.User;
+
 import model.Auction;
 import model.Bid;
 import model.Product;

@@ -2,8 +2,8 @@ package service;
 
 
 import model.User;
-import model.user.LabelValue;
-import model.user.User;
+import model.LabelValue;
+
 
 import java.util.List;
 
