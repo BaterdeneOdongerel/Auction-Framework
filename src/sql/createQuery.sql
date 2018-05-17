@@ -34,9 +34,8 @@ CREATE TABLE IF NOT EXISTS `Product` (
 	`name` VARCHAR(100),
 	`desc` VARCHAR(200),
     `catid` BIGINT,
-	`user` VARCHAR(200) comment 'id of the user who offered the best bid',
-    `bid_price` int,
     `status` int default 0,
+    `image_path` VARCHAR(300),
 	PRIMARY KEY (`id`)
 ) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 

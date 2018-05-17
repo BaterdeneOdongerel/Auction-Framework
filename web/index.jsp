@@ -57,7 +57,6 @@
 <!-- home area-->
 <section id="home">
   <div class="container">
-<<<<<<< HEAD
     <div class="row">
       <div class="col-md-offset-1 col-md-7">
         <div class="home-content">
@@ -77,7 +76,7 @@
       <div class="pull-left arrival-text">
         <h3 class="text-uppercase">Products</h3>
       </div>
-      <div class="nav-center text-uppercase">
+      <%--<div class="nav-center text-uppercase">
         <ul class="nav  nav-pills text-center">
 
           <li class="active"><a data-toggle="tab" href="#men"> MEN</a></li>
@@ -85,7 +84,7 @@
           <li><a data-toggle="tab" href="#accesories">ACCESSORIES</a></li>
           <li><a data-toggle="tab" href="#kid"> KID</a></li>
         </ul>
-      </div>
+      </div>--%>
     </div>
   </div>
 </section>
@@ -96,30 +95,7 @@
       <div id="men" class="tab-pane fade in active">
         <div class="arrival-item">
           <div>
-            <div class="single-product-area">
-              <div class="single-shop">
-                <a href="single-shop.html">
-                  <img src="public/assets/images/product-1.jpg" alt="">
-                </a>
-                <div class="shop-icon">
-                  <ul>
-                    <li><a href="single-shop.html"> <i class="fa fa-cart-plus"></i> </a></li>
-                    <li><a href=""> <i class="fa fa-heart-o"></i></a></li>
-                    <li><a href="single-shop.html"> <i class="fa fa-chain"></i></a></li>
-                  </ul>
 
-                </div>
-
-              </div>
-              <div class="single_featured_label text-center">
-                <h3>Test</h3>
-                <h4>
-                  <p>Test</p>
-
-                </h4>
-                <a href="single-shop.html" class="add-cart text-uppercase"> Bid</a>
-              </div>
-            </div>
             <c:forEach items="${products}" var="p">
               <div class="single-product-area">
                 <div class="single-shop">
@@ -151,60 +127,64 @@
 
       </div>
     </div>
-=======
 
-    <h3>Auction going on</h3>
+    <h3></h3>
 
-    <% List<Auction> auctions = (List<Auction>)request.getAttribute("auctions");%>
+      <% List<Auction> auctions = (List<Auction>) request.getAttribute("auctions");%>
 
     <div class="row">
-      <% for (int i = 0; i < auctions.size(); i ++ ) {%>
-        <% if ( i % 3 == 0 && i > 0 ) {%>
-          </div>
-          <div class="row">
-        <% } %>
-            <div class="column" id="1">
+        <% for (int i = 0; i < auctions.size(); i++) {%>
+        <% if (i % 3 == 0 && i > 0) {%>
+    </div>
+      <div class="row">
+          <% } %>
+          <div class="column" id="1">
               <h5><%= auctions.get(i).current_product.getName() %>
-                <span event="joined" class="label label-success"><%= i%></span>
-                <span event="joined" class="label label-warning"><%= auctions.get(i).getMinimumPrice()%>$</span>
+                  <span event="joined" class="label label-success"><%= i%></span>
+                  <span event="joined" class="label label-warning"><%= auctions.get(i).getMinimumPrice()%>$</span>
               </h5>
 
               <div class="desc">
-               <%= auctions.get(i).current_product.getDesc()%>
+                  <%= auctions.get(i).current_product.getDesc()%>
               </div>
-              <p> <%= auctions.get(i).getStartDate()%> <span event="joined" class="label label-danger">150$</span></p>
-              <p> <%= auctions.get(i).getEndDate()%> </p>
+              <p><%= auctions.get(i).getStartDate()%> <span event="joined" class="label label-danger">150$</span></p>
+              <p><%= auctions.get(i).getEndDate()%>
+              </p>
 
               <span class="label label-info">Going on</span>
-              <a><button type="button" event="edit" class="btn btn-primary btn-md" data-event="id_event" data-user="user_id" data-toggle="modal" data-target="#myModal<%= i%>" >Bid</button></a>
-            </div>
-
-        <% }%>
-    </div>
-    <% for (int i = 0; i < auctions.size(); i ++ ) {%>
-      <div class="modal fade" id="myModal<%= i%>" role="dialog">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title"><%= auctions.get(i).current_product.getName() %></h4>
-            </div>
-            <div class="modal-body">
-
-                <label for="ex3">Price</label>
-                <input class="form-control " id="ex3" type="number">
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success" data-dismiss="modal">submit</button>
-
-            </div>
+              <a>
+                  <button type="button" event="edit" class="btn btn-primary btn-md" data-event="id_event"
+                          data-user="user_id" data-toggle="modal" data-target="#myModal<%= i%>">Bid
+                  </button>
+              </a>
           </div>
+
+          <% }%>
+      </div>
+      <% for (int i = 0; i < auctions.size(); i++) {%>
+      <div class="modal fade" id="myModal<%= i%>" role="dialog">
+          <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><%= auctions.get(i).current_product.getName() %>
+                      </h4>
+                  </div>
+                  <div class="modal-body">
+
+                      <label for="ex3">Price</label>
+                      <input class="form-control " id="ex3" type="number">
+
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-success" data-dismiss="modal">submit</button>
+
+                  </div>
+              </div>
         </div>
       </div>
-    <% }%>
+      <% }%>
 
->>>>>>> d6f421bce90ba1fcabded9fdfad46d60047e4f32
   </div>
 </div>
 <footer class="copy text-center">

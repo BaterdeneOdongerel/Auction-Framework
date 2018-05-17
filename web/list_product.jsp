@@ -10,57 +10,68 @@
 
 <html>
 <head>
-    <head>
-
-        <title>Auction</title>
-        <jsp:include page="header.jsp" />
-
-    </head>
+    <title>Auction</title>
+    <jsp:include page="header.jsp"/>
+    <script src="public/assets/js/jquery.min.js"></script>
+    <script src="public/assets/bootstrap.bundle.min.js"></script>
+    <link href="public/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="public/assets/css/simple-sidebar.css" rel="stylesheet">
+    <script src="public/js/admin.js" rel="stylesheet"></script>
 </head>
 <body>
 
 
-<jsp:include page="nav.jsp" />
+<jsp:include page="nav.jsp"/>
 
 
-<div class="container">
-    <a href="edit_product?catid=${catid}">
-        <button type="button" class="btn btn-primary btn-lg">Add Product</button>
-    </a>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>User won bid</th>
-            <th>bid price</th>
-            <th>Status</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-        </thead>
-        <tbody>
+<div id="wrapper">
 
-        <c:forEach items="${products}" var="p">
-            <tr>
+    <!-- Sidebar -->
+    <jsp:include page="sidebar.jsp"/>
+    <!-- /#sidebar-wrapper -->
 
-                <td>${p.name}</td>
-                <td>${p.desc}</td>
-                <td>${p.user}</td>
-                <td>${p.bid_price}</td>
-                <td>status</td>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container">
 
-                <td><a href="/edit_product?id=${p.id}&catid=${catid}"> edit </a> </td>
-                <td><a href="/edit_product?delete_id=${p.id}&catid=${catid}"> delete </a> </td>
+            <a href="edit_product?catid=${catid}">
+                <button type="button" class="btn btn-primary btn-lg">Add Product</button>
+            </a>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>image</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
 
-            </tr>
-        </c:forEach>
+                <c:forEach items="${products}" var="p">
+                    <tr>
 
-        </tbody>
-    </table>
+                        <td>${p.name}</td>
+                        <td>${p.desc}</td>
+                        <td><img src="${p.imagePath}" width="50" height="50"/></td>
+                        <td>status</td>
+
+                        <td><a href="/edit_product?id=${p.id}&catid=${catid}"> edit </a></td>
+                        <td><a href="/edit_product?delete_id=${p.id}&catid=${catid}"> delete </a></td>
+
+                    </tr>
+                </c:forEach>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
 
 </div>
-
 
 
 </body>

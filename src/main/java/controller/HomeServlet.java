@@ -2,6 +2,7 @@ package controller;
 
 import model.user.Auction;
 import model.user.Product;
+import service.AuctionService;
 import service.AuctionServiceImpl;
 
 import javax.servlet.RequestDispatcher;
@@ -13,21 +14,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/")
+@WebServlet("/home")
 public class HomeServlet extends BaseServlet {
 
     @Override
     protected void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Product> products = Services.ProductService.selectAll();
         request.setAttribute("products" , products);
-
-        AuctionServiceImpl auctionServiceImpl = new AuctionServiceImpl();
+        AuctionService auctionServiceImpl = Services.AuctionService;
         List<Auction> auctions = auctionServiceImpl.selectRunning();
-        request.setAttribute("auctions" , auctions);
-
+        request.setAttribute("auctions", auctions);
         RequestDispatcher view = request.getRequestDispatcher("index.jsp");
         view.forward(request, response);
-
     }
 
     @Override

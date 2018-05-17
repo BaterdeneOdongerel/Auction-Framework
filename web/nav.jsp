@@ -19,7 +19,6 @@
                 <ul class="nav navbar-nav">
                     <c:if test="${not empty user}">
                         <li class="active"><a href="/">Home</a></li>
-                        <li><a href="list_category">Categories</a></li>
                         <li><a href="admin">Admin</a></li>
                     </c:if>
 

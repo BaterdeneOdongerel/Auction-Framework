@@ -9,15 +9,15 @@ public abstract class TimerTask<T> implements Runnable {
     private LocalDateTime executeTime;
 
 
+    public TimerTask(LocalDateTime executeTime) {
+        this.executeTime = executeTime;
+    }
+
     public LocalDateTime getExecuteTime() {
         return executeTime;
     }
 
     public void setExecuteTime(LocalDateTime executeTime) {
-        this.executeTime = executeTime;
-    }
-
-    public TimerTask(LocalDateTime executeTime) {
         this.executeTime = executeTime;
     }
 

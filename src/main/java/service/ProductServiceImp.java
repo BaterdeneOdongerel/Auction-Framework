@@ -18,10 +18,8 @@ public class ProductServiceImp implements ProductService {
         p.setName("name");
         p.setDesc("desc");
         p.setCatid(1);
-        p.setUser(2);
-        p.setBid_price(3);
-
-
+        p.setImagePath("C:\\w\\awawdawd\\awdawd");
+        psi.create(p);
 
         List<Product> ps = psi.selectAll();
         for (Product cp : ps) {
@@ -38,13 +36,12 @@ public class ProductServiceImp implements ProductService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO product (name, `desc` , catid, user, bid_price) "
-                    + " VALUES (?, ? , ? , ? ,?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO product (name, `desc` , catid, image_path) "
+                    + " VALUES (?, ? , ? , ?)");
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getDesc());
             preparedStatement.setInt(3, product.getCatid());
-            preparedStatement.setInt(4, product.getUser());
-            preparedStatement.setInt(5, product.getBid_price());
+            preparedStatement.setString(4, product.getImagePath());
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
@@ -85,9 +82,8 @@ public class ProductServiceImp implements ProductService {
                 product.setId(resultSet.getInt("id"));
                 product.setName(resultSet.getString("name"));
                 product.setDesc(resultSet.getString("desc"));
-                product.setUser(resultSet.getInt("user"));
                 product.setCatid(resultSet.getInt("catid"));
-                product.setBid_price(resultSet.getInt("bid_price"));
+                product.setImagePath(resultSet.getString("image_path"));
             }
 
         } catch (Exception e) {
@@ -120,7 +116,7 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public List<Product> selectAll() {
-        List<Product> products = new ArrayList<Product>();
+        List<Product> products = new ArrayList<>();
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -135,9 +131,8 @@ public class ProductServiceImp implements ProductService {
                 product.setId(resultSet.getInt("id"));
                 product.setName(resultSet.getString("name"));
                 product.setDesc(resultSet.getString("desc"));
-                product.setUser(resultSet.getInt("user"));
                 product.setCatid(resultSet.getInt("catid"));
-                product.setBid_price(resultSet.getInt("bid_price"));
+                product.setImagePath(resultSet.getString("image_path"));
                 products.add(product);
             }
 
@@ -211,14 +206,13 @@ public class ProductServiceImp implements ProductService {
         try {
             connection = ConnectionConfiguration.getConnection();
 
-            preparedStatement = connection.prepareStatement("UPDATE product set name = ? , `desc` = ? , catid = ? , user = ? , bid_price = ?  " +
+            preparedStatement = connection.prepareStatement("UPDATE product set name = ? , `desc` = ? , catid = ? , image_path = ?  " +
                     "where id = ?");
-            preparedStatement.setInt(6, id);
+            preparedStatement.setInt(5, id);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getDesc());
             preparedStatement.setInt(3, product.getCatid());
-            preparedStatement.setInt(4, product.getUser());
-            preparedStatement.setInt(5, product.getBid_price());
+            preparedStatement.setString(4, product.getImagePath());
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
@@ -261,9 +255,8 @@ public class ProductServiceImp implements ProductService {
                 product.setId(resultSet.getInt("id"));
                 product.setName(resultSet.getString("name"));
                 product.setDesc(resultSet.getString("desc"));
-                product.setUser(resultSet.getInt("user"));
                 product.setCatid(resultSet.getInt("catid"));
-                product.setBid_price(resultSet.getInt("bid_price"));
+                product.setImagePath(resultSet.getString("image_path"));
                 products.add(product);
             }
 

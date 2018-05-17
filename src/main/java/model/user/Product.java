@@ -7,11 +7,14 @@ public class Product {
     private String name;
     private String desc;
     private int catid;
-    private int user ;
-    private int bid_price;
+    private String imagePath;
 
-    public int getId() {
-        return id;
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public void setId(int id) {
@@ -42,20 +45,5 @@ public class Product {
         this.catid = catid;
     }
 
-    public int getUser() {
-        return user;
-    }
-
-    public void setUser(int user_id) {
-        this.user = user_id;
-    }
-
-    public int getBid_price() {
-        return bid_price;
-    }
-
-    public void setBid_price(int bid_price) {
-        this.bid_price = bid_price;
-    }
 
 }

@@ -8,51 +8,69 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Cycla</title>
-    <jsp:include page="header.jsp" />
+    <title>Auction</title>
+    <jsp:include page="header.jsp"/>
+    <script src="public/assets/js/jquery.min.js"></script>
+    <script src="public/assets/bootstrap.bundle.min.js"></script>
+    <link href="public/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="public/assets/css/simple-sidebar.css" rel="stylesheet">
+    <script src="public/js/admin.js" rel="stylesheet"></script>
     <link rel="stylesheet" type="text/css" href="/rsc/css/main.css">
 </head>
 <body>
 
-<jsp:include page="nav.jsp" />
+<jsp:include page="nav.jsp"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="back_container">
-    <div class="container text-center">
-        <div class="body_content text-left col-sm-7">
-            <h3>Edit Category</h3>
 
-            <form class="form-horizontal" action="/edit_category" method="post">
+<div id="wrapper">
 
-                <input type="hidden" value="${category.id}" name="id" class="form-control" id="id"/>
+    <!-- Sidebar -->
+    <jsp:include page="sidebar.jsp"/>
+    <!-- /#sidebar-wrapper -->
 
-                <div class="form-group">
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
 
-                    <label class="control-label col-sm-2" for="catname">Category name:</label>
+        <div class="back_container">
+            <div class="container text-center">
+                <div class="body_content text-left col-sm-7">
+                    <h3>Edit Category</h3>
 
-                    <div class="col-sm-9">
-                        <input type="text" value="${category.name}" name="catname" class="form-control" id="catname" placeholder="Category name"/>
-                    </div>
+                    <form class="form-horizontal" action="/edit_category" method="post">
 
+                        <input type="hidden" value="${category.id}" name="id" class="form-control" id="id"/>
+
+                        <div class="form-group">
+
+                            <label class="control-label col-sm-2" for="catname">Category name:</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" value="${category.name}" name="catname" class="form-control"
+                                       id="catname" placeholder="Category name"/>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="desc">Category description:</label>
+                            <div class="col-sm-9">
+                                <textarea cols="3" rows="5" class="form-control" id="desc"
+                                          name="desc">${category.desc}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" id="edit_button" class="btn btn-default btn-lg">submit</button>
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
-
-
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="desc">Category description:</label>
-                    <div class="col-sm-9">
-                        <textarea cols="3" rows="5"  class="form-control" id="desc" name="desc" >${category.desc}</textarea>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" id="edit_button" class="btn btn-default btn-lg">submit</button>
-                    </div>
-                </div>
-
-            </form>
+            </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

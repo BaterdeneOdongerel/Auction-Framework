@@ -14,7 +14,11 @@
 
         <title>Auctions</title>
         <jsp:include page="header.jsp" />
-
+        <script src="public/assets/js/jquery.min.js"></script>
+        <script src="public/assets/bootstrap.bundle.min.js"></script>
+        <link href="public/assets/css/bootstrap.css" rel="stylesheet">
+        <link href="public/assets/css/simple-sidebar.css" rel="stylesheet">
+        <script src="public/js/admin.js" rel="stylesheet"></script>
     </head>
 </head>
 <body>
@@ -24,39 +28,37 @@
 
 
 <div class="container">
-    <a href="edit_category">
-        <button type="button" class="btn btn-primary btn-lg">Add Category</button>
-    </a>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Edit</th>
-            <th>Delete</th>
-            <th>products</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div id="wrapper">
 
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Start Bootstrap
+                    </a>
+                </li>
+                <li>
+                    <a href="/list_product">Products</a>
+                </li>
+                <li>
+                    <a href="/list_category">Caterory</a>
+                </li>
+                <li>
+                    <a href="/list_auction">Auction</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
 
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
 
-        <c:forEach items="${auctions}" var="auction">
-            <tr>
-
-                <td>${auction.name}</td>
-                <td>${auction.desc}</td>
-
-                <td><a href="/edit_category?id=${cat.id}"> edit </a> </td>
-                <td><a href="/edit_category?delete_id=${cat.id}"> delete </a> </td>
-                <td><a href="/list_product?catid=${cat.id}"> status  </a> </td>
-                <td><a href="/list_product?catid=${cat.id}"> calculate  </a> </td>
-            </tr>
-        </c:forEach>
-
-        </tbody>
-    </table>
-
+    </div>
 </div>
 
 
