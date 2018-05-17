@@ -14,6 +14,10 @@
         </li>
         <li>
             <a href="/list_auction">Auction</a>
+
+            <a href="/list_auction">User</a>
+
+            <a href="/list_auction">History</a>
         </li>
     </ul>
 </div>

@@ -1,6 +1,7 @@
 package service;
 
 import db.ConnectionConfiguration;
+import model.user.Auction;
 import model.user.Category;
 import model.user.Product;
 
@@ -287,5 +288,59 @@ public class ProductServiceImp implements ProductService {
         }
 
         return products;
+    }
+
+    @Override
+    public List<Auction> selectWithAuctions() {
+        List<Auction> auctions = new ArrayList<>();
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("select * from product join auction on product.id = auction.product");
+
+            while (resultSet.next()) {
+                Auction auction = new Auction();
+                auction.setId(resultSet.getInt("id"));
+                auction.setName(resultSet.getString("name"));
+                auction.setRunning(resultSet.getBoolean("isrunning"));
+                auction.setImageLink(resultSet.getString("image_path"));
+                auction.setStartDate(resultSet.getDate("startDate"));
+                auction.setEndDate(resultSet.getDate("endDate"));
+                auction.setMinimumPrice(resultSet.getDouble("minimumPrice"));
+                auction.setCurrentWinningBid(resultSet.getLong("currentWinningBid"));
+                auctions.add(auction);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return auctions;
     }
 }

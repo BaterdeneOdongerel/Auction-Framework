@@ -24,5 +24,7 @@ public class Auction {
     private long currentWinningBid;
     private long winner;
     private Double minimumPrice;
+    private String name;
+    private String imageLink;
 }
 

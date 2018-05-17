@@ -1,4 +1,5 @@
 package model.user;
+
 import lombok.Data;
 
 @Data
@@ -44,6 +45,5 @@ public class Product {
     public void setCatid(int catid) {
         this.catid = catid;
     }
-
 
 }
