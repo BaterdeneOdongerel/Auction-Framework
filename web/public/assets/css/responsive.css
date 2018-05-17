@@ -1,0 +1,207 @@
+/* lg */
+@media (min-width: 1200px) {
+    .col-xs-offset-1 {
+        margin-left: 0;
+    }
+}
+
+/* md */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .col-xs-offset-1 {
+        margin-left: 0;
+    }
+}
+
+/* sm */
+@media (min-width: 768px) and (max-width: 991px) {
+    .col-xs-offset-1 {
+        margin-left: 0;
+    }
+
+    .breaking-news h2 {
+        font-size: 20px;
+        padding-right: 14px;
+        border-right: 1px solid #8F4012;
+    }
+
+    .breaking-news p {
+        font-size: 13px;
+        padding: 8px 13px;
+        display: inline-block;
+    }
+
+    .single-news img {
+        width: 100%;
+    }
+
+    .single-news .entry-meta {
+        overflow: hidden;
+        margin: 30px 0;
+    }
+
+    .single-shop img {
+        width: 100%;
+    }
+
+    .subscribe-area {
+        padding: 49px 0;
+    }
+
+    .form-inline.subscribe-form {
+        text-align: center;
+    }
+
+    .subscribe-form input[type="email"] {
+        margin: 20px auto;
+        display: block;
+    }
+
+    .single-shopping {
+        padding: 35px 0 45px 15px;
+    }
+}
+
+/* xs */
+@media (max-width: 767px) {
+    .logo.text-center {
+        text-align: left;
+        float: left;
+    }
+
+    .my-account span, .shopping-cart span {
+        display: none;
+    }
+
+    .cart-total ul li .mini-cart-content {
+        top: auto;
+    }
+
+    .main-menu ul li {
+        list-style: none;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        padding-left: 10px;
+    }
+
+    .navbar-toggle {
+        float: none;
+        border: 0;
+        text-align: center;
+    }
+
+    .navbar-center {
+        float: none;
+        margin: auto;
+        display: block;
+        table-layout: fixed;
+    }
+
+    .arrival-item.owl-theme .owl-controls {
+
+        top: -180px;
+
+    }
+    .timer {
+        top: 0;
+        width: auto;
+
+    }
+    .breaking-news h2 {
+        float: none !important;
+        text-align: center;
+        border-right: 0;
+    }
+    .single-shop img {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .arrival-menu .arrival-text {
+        display: block;
+        float: none !important;
+        text-align: center;
+    }
+
+    .shop-now {
+        bottom: 40px;
+    }
+
+    .single-shop.collection img {
+        width: 100%;
+        margin: 0;
+    }
+
+    .single-shipping {
+        padding: 0;
+        border-right: 0;
+    }
+
+    .arrival-menu h3 {
+        font-size: 18px;
+        line-height: 44px;
+    }
+
+    .nav-center ul.nav {
+        display: block;
+    }
+
+    .subscribe-area {
+        padding: 49px 0;
+    }
+
+    .form-inline.subscribe-form {
+        text-align: center;
+    }
+
+    .subscribe-form input[type="email"] {
+        margin: 20px auto;
+        display: block;
+    }
+
+    .single-news img {
+        width: 100%;
+    }
+
+    .single-logo {
+        text-align: center;
+    }
+
+    .logo-carousel.owl-theme .owl-controls .owl-buttons div {
+        display: none;
+    }
+
+    .single-shopping {
+        padding: 35px 0 45px 20px;
+    }
+
+    .show-search {
+        position: absolute;
+        top: -1px;
+        display: none;
+        right: 6%;
+        z-index: 10000;
+    }
+
+    a.add-cart-btn {
+        display: block;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .p-details-tab ul li {
+        margin-right: 12px;
+
+    }
+}
+
+/* XS Portrait */
+@media (max-width: 479px) {
+    .logo-carousel.owl-theme .owl-controls .owl-buttons div.owl-prev {
+        left: 2%;
+    }
+
+    .logo-carousel.owl-theme .owl-controls .owl-buttons div.owl-next {
+        right: -8%;
+    }
+}

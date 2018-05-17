@@ -116,7 +116,7 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public List<Product> selectAll() {
-        List<Product> products = new ArrayList<Product>();
+        List<Product> products = new ArrayList<>();
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;

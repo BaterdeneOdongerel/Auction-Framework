@@ -1,31 +1,22 @@
 package controller;
 
-import org.apache.commons.fileupload.FileUploadException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class BaseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             if (filterRequest(request, response)) {
-                checkAccidents(request, response);
                 post(request, response);
             }
 
         } catch (Exception ex) {
             handleException(request, response, ex);
         }
-    }
-
-    private void checkAccidents(HttpServletRequest request, HttpServletResponse response) {
-
     }
 
     private void handleException(HttpServletRequest request, HttpServletResponse response, Exception ex) throws ServletException, IOException {
@@ -37,7 +28,6 @@ public abstract class BaseServlet extends HttpServlet {
 
         try {
             if (filterRequest(request, response)) {
-                checkAccidents(request, response);
                 get(request, response);
             }
 
@@ -46,13 +36,18 @@ public abstract class BaseServlet extends HttpServlet {
         }
     }
 
-    private boolean filterRequest(HttpServletRequest request, HttpServletResponse response) {
-        if (!(request.getRequestURI().equals("/login") || request.getRequestURI().equals("/signup"))) {
-            if (request.getSession().getAttribute("user") == null)
-                try {
+    private boolean filterRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String page = request.getRequestURI().replace("/", "");
+        switch (page) {
+            case "login":
+            case "signup":
+            case "home":
+                break;
+            case "admin":
+            default:
+                boolean missingUser = request.getSession().getAttribute("user") == null;
+                if (missingUser) {
                     response.sendRedirect("/login");
-                    return false;
-                } catch (Exception ex) {
                     return false;
                 }
         }

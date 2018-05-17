@@ -1,14 +1,11 @@
 package controller;
 
 
-import model.user.Category;
 import model.user.Product;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import service.CategoryServiceImp;
 import service.ProductServiceImp;
 
 import javax.servlet.RequestDispatcher;
@@ -16,11 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 @WebServlet("/edit_product")

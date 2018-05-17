@@ -2,7 +2,6 @@ package service;
 
 import db.ConnectionConfiguration;
 import model.user.Category;
-import model.user.User;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -40,8 +40,6 @@ public class EditCategoryServlet extends BaseServlet {
             request.setAttribute("category", cat);
         }
         response.sendRedirect("/list_category");
-
-
     }
 
     protected void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -60,7 +58,6 @@ public class EditCategoryServlet extends BaseServlet {
 
             if (sid != null) {
                 id = Integer.parseInt(sid);
-
                 cat = categoryServiceImp.selectById(id);
 
             }
