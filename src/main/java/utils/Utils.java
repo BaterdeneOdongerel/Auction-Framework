@@ -11,7 +11,9 @@ import java.time.LocalTime;
 
 public class Utils {
 
-
+    public static Date convertToSqlDate(String stringDate) {
+        return Date.valueOf(stringDate);
+    }
     public static Date sqlCurrentDate() {
         long millis = System.currentTimeMillis();
         return new Date(millis);

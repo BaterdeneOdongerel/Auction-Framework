@@ -16,6 +16,7 @@ import java.util.logging.SimpleFormatter;
  */
 public class LoggingService {
     static Logger logger = Logger.getLogger("ServerLog");
+
     public static void createLog(String name, String content, LogType type) {
         switch (type) {
             case File:

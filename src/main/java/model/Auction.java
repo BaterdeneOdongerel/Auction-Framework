@@ -11,9 +11,11 @@ public class Auction {
     private long id;
     private Date startDate;
     private Date endDate;
-    // optional
-    public Product current_product;
 
+    //optional
+    public Product current_product;
+    public User bidOwnerUser;
+    //optional
     private long bidOwner;
     private boolean isRunning;
 

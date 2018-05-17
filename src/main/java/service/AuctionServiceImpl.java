@@ -4,6 +4,8 @@ package service;
 import Framework.IteratorPattern.ConcreteIterator;
 import Framework.IteratorPattern.Iterator;
 import db.ConnectionConfiguration;
+import model.User;
+
 import model.Auction;
 import model.Bid;
 import model.Product;
@@ -23,9 +25,12 @@ public class AuctionServiceImpl implements AuctionService {
         AuctionServiceImpl a = new AuctionServiceImpl();
         List<Auction> ls = a.selectRunning();
         for (Auction ac : ls) {
-            System.out.println("-------->" + ac.getId() + " " + ac.getProduct());
+            System.out.println("-------->" + ac.getId() + " " + ac.getStartDate());
         }
-        //a.processCurrentWinningBid();
+
+        Auction auction = a.selectById(1);
+        System.out.println("-------->" + auction.getId() + " " + auction.bidOwnerUser.getLastName());
+        System.out.println("-------->" + auction.getId() + " " + auction.current_product.getName());
 
         a.processCurrentWinningBid();
         //ConcreteIterator auctionList = new ConcreteIterator(getLists);
@@ -113,19 +118,31 @@ public class AuctionServiceImpl implements AuctionService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("SELECT * FROM auction WHERE id = ?");
+            preparedStatement = connection.prepareStatement("select a.* , p.id as pid , p.name , p.desc,first_name , last_name from auction a" +
+                    " inner join product p on a.product = p.id inner join user u on u.id= a.bidOwner " +
+                    " WHERE a.id = ?");
+
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 auction.setId(resultSet.getInt("id"));
+                auction.setMinimumPrice(resultSet.getDouble("minimumPrice"));
                 auction.setStartDate(resultSet.getDate("startDate"));
                 auction.setEndDate(resultSet.getDate("endDate"));
-                auction.setRunning(resultSet.getBoolean("isRunning"));
-                auction.setMinimumPrice(resultSet.getDouble("minimumPrice"));
-                auction.setCurrentWinner(resultSet.getLong("currentWinner"));
-                auction.setCurrentWinningBid(resultSet.getLong("currentWinningBid"));
-                auction.setWinner(resultSet.getLong("winner"));
+                auction.setRunning(resultSet.getBoolean("isrunning"));
+                auction.setProduct(resultSet.getInt("product"));
+                auction.setCurrentWinner(resultSet.getInt("currentWinner"));
+                auction.setCurrentWinningBid(resultSet.getInt("currentWinningBid"));
+                auction.setWinner(resultSet.getInt("winner"));
+                auction.current_product = new Product();
+                auction.current_product.setId(resultSet.getInt("pid"));
+                auction.current_product.setName(resultSet.getString("name"));
+                auction.current_product.setDesc(resultSet.getString("desc"));
+                auction.bidOwnerUser = new User();
+                auction.bidOwnerUser.setFirstName(resultSet.getString("first_name"));
+                auction.bidOwnerUser.setLastName(resultSet.getString("last_name"));
+
 
             }
 
@@ -161,7 +178,66 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public List<Auction> selectAll() {
 
-        return null;
+        List<Auction> auctions = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = ConnectionConfiguration.getConnection();
+            preparedStatement = connection.prepareStatement("select a.* , p.id as pid , p.name , p.desc from auction a inner join product p on a.product = p.id where isrunning = 1");
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                Auction auction = new Auction();
+                auction.setId(resultSet.getInt("id"));
+                auction.setMinimumPrice(resultSet.getDouble("minimumPrice"));
+                auction.setStartDate(resultSet.getDate("startDate"));
+                auction.setEndDate(resultSet.getDate("endDate"));
+                auction.setRunning(resultSet.getBoolean("isrunning"));
+                auction.setProduct(resultSet.getInt("product"));
+                auction.setCurrentWinner(resultSet.getInt("currentWinner"));
+                auction.setCurrentWinningBid(resultSet.getInt("currentWinningBid"));
+                auction.setWinner(resultSet.getInt("winner"));
+                auction.current_product = new Product();
+                auction.current_product.setId(resultSet.getInt("pid"));
+                auction.current_product.setName(resultSet.getString("name"));
+                auction.current_product.setDesc(resultSet.getString("desc"));
+
+                auction.bidOwnerUser = new User();
+                auction.bidOwnerUser.setFirstName(resultSet.getString("first_name"));
+                auction.bidOwnerUser.setLastName(resultSet.getString("last_name"));
+                auctions.add(auction);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return auctions;
     }
 
     @Override
@@ -213,7 +289,7 @@ public class AuctionServiceImpl implements AuctionService {
             preparedStatement.setDouble(3, auction.getMinimumPrice());
             preparedStatement.setLong(4, auction.getBidOwner());
 
-            preparedStatement.setBoolean(5, auction.isRunning());//TODO this should be default
+            preparedStatement.setBoolean(5, true);//TODO this should be default
             preparedStatement.setLong(6, auction.getProduct());
             preparedStatement.executeUpdate();
 
@@ -427,62 +503,7 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
 
-    private List<Bid> calculateWinningBid() {
-        List<Bid> bids = new ArrayList<>();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
 
-        try {
-            connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("SELECT b.id,b.user,b.auction,b.amount,b.bidDate " +
-                    " FROM bid b,auction a " +
-                    " WHERE amount=(SELECT MAX(amount) " +
-                    "    FROM bid WHERE auction=b.auction) " +
-                    " and a.isRunning = 0 and a.endDate = curdate()");
-
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                Bid b = new Bid();
-
-                b.setAuction(resultSet.getLong("auction"));
-                b.setAmount(resultSet.getDouble("amount"));
-                b.setBidDate(resultSet.getDate("bidDate"));
-                b.setId(resultSet.getLong("id"));
-                b.setUser(resultSet.getLong("user"));
-
-                bids.add(b);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return bids;
-    }
 
     private void updateCurrentWinningBid(Bid bid) {
         Connection connection = null;
@@ -521,6 +542,7 @@ public class AuctionServiceImpl implements AuctionService {
         }
 
     }
+
 
     @Override
     public void processCurrentWinningBid() {

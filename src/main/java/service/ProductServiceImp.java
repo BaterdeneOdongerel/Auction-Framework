@@ -1,6 +1,9 @@
 package service;
 
 import db.ConnectionConfiguration;
+
+import model.LabelValue;
+
 import model.Auction;
 import model.Product;
 
@@ -341,5 +344,21 @@ public class ProductServiceImp implements ProductService {
         }
 
         return auctions;
+    }
+
+    @Override
+    public List<LabelValue> getProductListForDropDown() {
+        List<LabelValue> selectItems = new ArrayList<>();
+
+        for (Product p : selectAll()) {
+
+            LabelValue l = new LabelValue();
+            l.setLabel(p.getName());
+            l.setValue(p.getId());
+            selectItems.add(l);
+
+        }
+
+        return selectItems;
     }
 }

@@ -21,7 +21,7 @@ public class UserListingServlet extends BaseServlet {
     protected void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CategoryServiceImp categoryServiceImp = new CategoryServiceImp();
         List<User> users = Services.UserService.selectAll();
-        request.setAttribute("users" , users);
+        request.setAttribute("users", users);
         RequestDispatcher view = request.getRequestDispatcher("list_user.jsp");
         view.forward(request, response);
     }
