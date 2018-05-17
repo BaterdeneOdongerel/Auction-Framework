@@ -7,9 +7,6 @@
             </a>
         </li>
         <li>
-            <a href="/list_product">Products</a>
-        </li>
-        <li>
             <a href="/list_category">Category</a>
         </li>
         <li>
