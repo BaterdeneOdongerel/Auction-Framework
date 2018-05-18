@@ -67,7 +67,7 @@ public class EditAuctionServlet extends BaseServlet {
             String product = request.getParameter("product");
             String bidOwner = request.getParameter("bidOwner");
             String minimumPrice = request.getParameter("minimumPrice");
-            String isRunning = request.getParameter("isRunning");
+            String isRunning = request.getParameter("isRunning");//TODO CHECK
 
             Auction auction = new Auction();
 
