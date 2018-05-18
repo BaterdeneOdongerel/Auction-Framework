@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -11,8 +13,19 @@ import java.time.LocalTime;
 
 public class Utils {
 
-    public static Date convertToSqlDate(String stringDate) {
-        return Date.valueOf(stringDate);
+
+    public static String status(boolean value) {
+        return value == true ? "Open" : "Closed";
+    }
+
+    public static Date convertToSqlDate(String stringDate) throws ParseException {
+
+        SimpleDateFormat sdfmt1 = new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat sdfmt2 = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date dDate = sdfmt1.parse(stringDate);
+        //String strOutput = sdfmt2.format( dDate );
+
+        return Date.valueOf(sdfmt2.format(dDate));
     }
     public static Date sqlCurrentDate() {
         long millis = System.currentTimeMillis();
