@@ -9,7 +9,7 @@
 <html>
 <head>
 
-    <title>Cycla</title>
+    <title>Auction</title>
     <jsp:include page="header.jsp" />
  </head>
 <body>

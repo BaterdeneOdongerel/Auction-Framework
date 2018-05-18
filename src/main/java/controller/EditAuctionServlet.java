@@ -67,6 +67,7 @@ public class EditAuctionServlet extends BaseServlet {
             String product = request.getParameter("product");
             String bidOwner = request.getParameter("bidOwner");
             String minimumPrice = request.getParameter("minimumPrice");
+            String isRunning = request.getParameter("isRunning");//TODO CHECK
 
             Auction auction = new Auction();
 
@@ -75,11 +76,13 @@ public class EditAuctionServlet extends BaseServlet {
             auction.setMinimumPrice(Double.valueOf(minimumPrice));
             auction.setProduct(Integer.parseInt(product));
             auction.setBidOwner(Integer.parseInt(bidOwner));
+            auction.setRunning((!isRunning.isEmpty() && isRunning != null) && Boolean.getBoolean(isRunning));
 
 
             if (sid == null || "-1".equals(sid)) { // create
                 auctionServiceImp.create(auction);
             } else { // update
+
                 auctionServiceImp.update(auction, Integer.parseInt(sid));
             }
 

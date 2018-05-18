@@ -15,6 +15,8 @@ public class Auction {
     //optional
     public Product current_product;
     public User bidOwnerUser;
+
+    public String status;
     //optional
     private long bidOwner;
     private boolean isRunning;

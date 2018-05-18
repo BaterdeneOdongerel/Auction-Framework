@@ -11,10 +11,12 @@ import model.Bid;
 import model.Product;
 import model.Report.AuctionReport;
 import org.springframework.stereotype.Service;
+import utils.Utils;
 
 import java.sql.*;
 import java.text.ParseException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -22,6 +24,19 @@ import java.util.List;
 @Service("auctionService")
 public class AuctionServiceImpl implements AuctionService {
     public static void main(String arg[]) throws ParseException {
+        String str3 = "05/17/2019";
+        SimpleDateFormat sdfmt1 = new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat sdfmt2 = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date dDate = sdfmt1.parse(str3);
+        String strOutput = sdfmt2.format(dDate);
+
+        String str = "2015-03-31";
+        String str2 = "17/05/2019";
+        Date date = Date.valueOf(str);//converting string into sql date
+        //Date date2=Date.valueOf(str2);//converting string into sql date
+        System.out.println(date);
+        System.out.println(strOutput);
+
         AuctionServiceImpl a = new AuctionServiceImpl();
         List<Auction> ls = a.selectRunning();
         for (Auction ac : ls) {
@@ -118,8 +133,8 @@ public class AuctionServiceImpl implements AuctionService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("select a.* , p.id as pid , p.name , p.desc,first_name , last_name from auction a" +
-                    " inner join product p on a.product = p.id inner join user u on u.id= a.bidOwner " +
+            preparedStatement = connection.prepareStatement("select a.* , p.id as pid , p.name , p.desc,first_name,last_name from auction a" +
+                    " inner join product p on a.product = p.id inner join user u on u.user_id= a.bidOwner " +
                     " WHERE a.id = ?");
 
             preparedStatement.setInt(1, id);
@@ -142,7 +157,7 @@ public class AuctionServiceImpl implements AuctionService {
                 auction.bidOwnerUser = new User();
                 auction.bidOwnerUser.setFirstName(resultSet.getString("first_name"));
                 auction.bidOwnerUser.setLastName(resultSet.getString("last_name"));
-
+                auction.setStatus(Utils.status(resultSet.getBoolean("isrunning")));
 
             }
 
@@ -185,12 +200,20 @@ public class AuctionServiceImpl implements AuctionService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("select a.* , p.id as pid , p.name , p.desc from auction a inner join product p on a.product = p.id where isrunning = 1");
+            preparedStatement = connection.prepareStatement("select a.* , p.id as pid , p.name , p.desc,first_name,last_name " +
+                    " from auction a inner join product p on a.product = p.id inner join user u on u.user_id= a.bidOwner ");
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
 
                 Auction auction = new Auction();
+
+                auction.current_product = new Product();
+                auction.current_product.setId(resultSet.getInt("pid"));
+                auction.current_product.setName(resultSet.getString("name"));
+                auction.current_product.setDesc(resultSet.getString("desc"));
+                auction.setStatus(Utils.status(resultSet.getBoolean("isrunning")));
+
                 auction.setId(resultSet.getInt("id"));
                 auction.setMinimumPrice(resultSet.getDouble("minimumPrice"));
                 auction.setStartDate(resultSet.getDate("startDate"));
@@ -200,10 +223,7 @@ public class AuctionServiceImpl implements AuctionService {
                 auction.setCurrentWinner(resultSet.getInt("currentWinner"));
                 auction.setCurrentWinningBid(resultSet.getInt("currentWinningBid"));
                 auction.setWinner(resultSet.getInt("winner"));
-                auction.current_product = new Product();
-                auction.current_product.setId(resultSet.getInt("pid"));
-                auction.current_product.setName(resultSet.getString("name"));
-                auction.current_product.setDesc(resultSet.getString("desc"));
+
 
                 auction.bidOwnerUser = new User();
                 auction.bidOwnerUser.setFirstName(resultSet.getString("first_name"));
@@ -289,7 +309,7 @@ public class AuctionServiceImpl implements AuctionService {
             preparedStatement.setDouble(3, auction.getMinimumPrice());
             preparedStatement.setLong(4, auction.getBidOwner());
 
-            preparedStatement.setBoolean(5, true);//TODO this should be default
+            preparedStatement.setBoolean(5, auction.isRunning());//TODO this should be default
             preparedStatement.setLong(6, auction.getProduct());
             preparedStatement.executeUpdate();
 
