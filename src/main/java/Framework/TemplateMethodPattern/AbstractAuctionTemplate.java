@@ -7,9 +7,12 @@ import java.util.List;
 
 public abstract class AbstractAuctionTemplate {
 
-    public final void processAuction(List<Bid> bids) {
+    public final List<Auction> processAuction(List<Bid> bids) {
+
         processCurrentWinningBid(bids);
-        calculateWinningBid(bids);
+        List<Auction> auctions = calculateWinningBid(bids);
+
+        return auctions;
     }
 
     public abstract void processCurrentWinningBid(List<Bid> currentWinningBids);

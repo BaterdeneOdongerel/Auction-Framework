@@ -1,8 +1,12 @@
 package service;
 
 
+import Framework.FactoryPattern.ConcreteTraceFactory;
+import Framework.FactoryPattern.TraceFactory;
 import Framework.IteratorPattern.ConcreteIterator;
 import Framework.IteratorPattern.Iterator;
+import Framework.TemplateMethodPattern.AbstractAuctionTemplate;
+import controller.Services;
 import db.ConnectionConfiguration;
 import model.User;
 
@@ -11,6 +15,7 @@ import model.Bid;
 import model.Product;
 import model.Report.AuctionReport;
 import org.springframework.stereotype.Service;
+import utils.TraceValue;
 import utils.Utils;
 
 import java.sql.*;
@@ -20,14 +25,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.groupingBy;
 
 @Service("auctionService")
-public class AuctionServiceImpl implements AuctionService {
+public class AuctionServiceImpl extends AbstractAuctionTemplate implements AuctionService {
     public static void main(String arg[]) throws ParseException {
+
+        TraceFactory traceFactory = traceFactory = new ConcreteTraceFactory();
+        traceFactory.getTracer(TraceValue.TRACE.name()).error("Test Log");
 
         AuctionServiceImpl a = new AuctionServiceImpl();
 
@@ -74,6 +78,20 @@ public class AuctionServiceImpl implements AuctionService {
         System.out.println("-------->" + auction.getId() + " " + auction.current_product.getName());
 
         a.processCurrentWinningBid(a.currentWinningBid());
+
+
+        List<Auction> auctionFinal = a.processAuction(a.currentWinningBid());
+        ConcreteIterator auctionList = new ConcreteIterator(auctionFinal);
+        Iterator auctionIterator = auctionList.getIterator();
+
+        while (auctionIterator.hasNext()) {
+
+            Auction n = (Auction) auctionIterator.next();
+            System.out.println("Auction Id:" + n.getId() + ",EndDate:" + n.getEndDate() + ",Winner:" + n.getWinner() + ",CurrentWinningBid:" + n.getCurrentWinningBid());
+
+        }
+
+
         //ConcreteIterator auctionList = new ConcreteIterator(getLists);
         //Iterator auctionIterator = auctionList.getIterator();
 
@@ -493,7 +511,8 @@ public class AuctionServiceImpl implements AuctionService {
         //return  null;
     }
 
-    private List<Bid> currentWinningBid() {
+    @Override
+    public List<Bid> currentWinningBid() {
         List<Bid> bids = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -635,24 +654,35 @@ public class AuctionServiceImpl implements AuctionService {
     public List<Auction> calculateWinningBid(List<Bid> bids) {
 
         List<Auction> auctionWinner = new ArrayList<>();
-        ConcreteIterator bidList = new ConcreteIterator(bids);
-        Iterator bidIterator = bidList.getIterator();
+        try {
+            ConcreteIterator bidList = new ConcreteIterator(bids);
+            Iterator bidIterator = bidList.getIterator();
 
-        while (bidIterator.hasNext()) {
+            while (bidIterator.hasNext()) {
 
-            Bid b = (Bid) bidIterator.next();
-            if (Utils.sqlCurrentDate().equals(b.getEndDate()))//TODO ADD TIME FROM CONFIG
-            {
-                updateCurrentWinningBid(b, true);
+                Bid b = (Bid) bidIterator.next();
 
-                Auction auction = new Auction();
-                auction.setId(b.getAuction());
-                auction.setCurrentWinningBid(b.getId());// TODO CURRENT AND FINAL WINNING BID
-                auction.setWinner(b.getUser());// TODO CURRENT AND FINAL WINNING USER
-                auction.setEndDate(b.getEndDate());
+                Date currentDate = Utils.sqlCurrentDate();
+                Date endDate = b.getEndDate();
 
-                auctionWinner.add(auction);
+
+                if (currentDate.equals(endDate))//TODO ADD TIME FROM CONFIG
+                {
+                    updateCurrentWinningBid(b, true);
+
+                    Auction auction = new Auction();
+                    auction.setId(b.getAuction());
+                    auction.setCurrentWinningBid(b.getId());// TODO CURRENT AND FINAL WINNING BID
+                    auction.setWinner(b.getUser());// TODO CURRENT AND FINAL WINNING USER
+                    auction.setEndDate(b.getEndDate());
+
+                    auctionWinner.add(auction);
+
+
+                }
             }
+        } catch (Exception e) {
+            Services.traceFactory.getTracer(TraceValue.TRACE.name()).error(e.getMessage());
         }
         return auctionWinner;
     }
