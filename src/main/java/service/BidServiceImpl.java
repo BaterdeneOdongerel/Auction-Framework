@@ -120,8 +120,8 @@ public class BidServiceImpl implements BidService {
                 bid.setId(resultSet.getInt("id"));
                 bid.setAmount(resultSet.getDouble("amount"));
                 bid.setBidDate(resultSet.getDate("bidDate"));
-                // bid.setUser(resultSet.getInt("user"));
-                //bid.setAuction(resultSet.getInt("auction"));
+                bid.setUser(resultSet.getInt("user"));
+                bid.setAuction(resultSet.getInt("auction"));
                 bids.add(bid);
             }
 

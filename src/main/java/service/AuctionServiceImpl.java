@@ -20,10 +20,36 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 @Service("auctionService")
 public class AuctionServiceImpl implements AuctionService {
     public static void main(String arg[]) throws ParseException {
+
+        AuctionServiceImpl a = new AuctionServiceImpl();
+
+        List<Auction> auctions = new ArrayList<>();
+        Auction ab = new Auction();
+        ab.setStartDate(Utils.sqlCurrentDate());
+        ab.setEndDate(Utils.sqlCurrentDate());
+        ab.setMinimumPrice(200.0);
+
+        Auction aa = new Auction();
+        aa.setStartDate(Utils.sqlCurrentDate());
+        aa.setEndDate(Utils.sqlCurrentDate());
+        aa.setMinimumPrice(300.0);
+        auctions.add(ab);
+        auctions.add(aa);
+
+        a.calculateWinningBidTest(auctions);
+
+
+
+
+
         String str3 = "05/17/2019";
         SimpleDateFormat sdfmt1 = new SimpleDateFormat("MM/dd/yy");
         SimpleDateFormat sdfmt2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -37,7 +63,7 @@ public class AuctionServiceImpl implements AuctionService {
         System.out.println(date);
         System.out.println(strOutput);
 
-        AuctionServiceImpl a = new AuctionServiceImpl();
+
         List<Auction> ls = a.selectRunning();
         for (Auction ac : ls) {
             System.out.println("-------->" + ac.getId() + " " + ac.getStartDate());
@@ -47,7 +73,7 @@ public class AuctionServiceImpl implements AuctionService {
         System.out.println("-------->" + auction.getId() + " " + auction.bidOwnerUser.getLastName());
         System.out.println("-------->" + auction.getId() + " " + auction.current_product.getName());
 
-        a.processCurrentWinningBid();
+        a.processCurrentWinningBid(a.currentWinningBid());
         //ConcreteIterator auctionList = new ConcreteIterator(getLists);
         //Iterator auctionIterator = auctionList.getIterator();
 
@@ -309,7 +335,8 @@ public class AuctionServiceImpl implements AuctionService {
             preparedStatement.setDouble(3, auction.getMinimumPrice());
             preparedStatement.setLong(4, auction.getBidOwner());
 
-            preparedStatement.setBoolean(5, auction.isRunning());//TODO this should be default
+            // preparedStatement.setBoolean(5, auction.isRunning());//TODO this should be default
+            preparedStatement.setBoolean(5, true);//TODO this should be default
             preparedStatement.setLong(6, auction.getProduct());
             preparedStatement.executeUpdate();
 
@@ -393,7 +420,7 @@ public class AuctionServiceImpl implements AuctionService {
                     " case  when isRunning = 1 then 'Open' else 'Closed'  end isRunning," +
                     "(select name from product where id = a.product ) product," +
                     " currentWinningBid," +
-                    "(select concat (first_name ,' ' , last_name) from user where id = a.winner ) winner," +
+                    " winner," +
                     "(select concat (first_name ,' ' , last_name) from user where id = b.user ) bidUser," +
                     "(select concat (first_name ,' ' , last_name) from user where id = a.currentWinner) currentWinner," +
                     "(select concat (first_name ,' ' , last_name) from user where id = a.bidOwner ) bidOwner " +
@@ -421,7 +448,7 @@ public class AuctionServiceImpl implements AuctionService {
                 auction.setMinimumPrice(resultSet.getBigDecimal("minimumPrice"));
                 auction.setCurrentWinner(resultSet.getString("currentWinner"));
                 auction.setCurrentWinningBid(resultSet.getString("currentWinningBid"));
-                auction.setWinner(resultSet.getString("winner"));
+                auction.setWinner(resultSet.getLong("winner"));
                 auction.setBidAmount(resultSet.getDouble("bidAmount"));
                 auction.setProduct(resultSet.getString("product"));
                 auction.setBidUser(resultSet.getString("bidUser"));
@@ -429,6 +456,8 @@ public class AuctionServiceImpl implements AuctionService {
                 auction.setBidDate(resultSet.getDate("bidDate"));
 
                 auction.setBidOwner(resultSet.getString("bidOwner"));
+                // auction.bidWinnerUser = new User();
+
 
 
                 auctions.add(auction);
@@ -472,7 +501,7 @@ public class AuctionServiceImpl implements AuctionService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement("SELECT b.id,b.user,b.auction,b.amount,b.bidDate " +
+            preparedStatement = connection.prepareStatement("SELECT b.id,b.user,b.auction,b.amount,b.bidDate, a.endDate " +
                     " FROM bid b,auction a " +
                     " WHERE amount=(SELECT MAX(amount) " +
                     "    FROM bid WHERE auction=b.auction) " +
@@ -489,6 +518,7 @@ public class AuctionServiceImpl implements AuctionService {
                 bid.setId(resultSet.getLong("id"));
 
                 bid.setAuction(resultSet.getLong("auction"));
+                bid.setEndDate(resultSet.getDate("endDate"));
 
                 bids.add(bid);
             }
@@ -522,22 +552,34 @@ public class AuctionServiceImpl implements AuctionService {
         return bids;
     }
 
-
-
-
-    private void updateCurrentWinningBid(Bid bid) {
+    private void updateCurrentWinningBid(Bid bid, boolean closeBid) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection
-                    .prepareStatement("update auction set currentWinner = ?, currentWinningBid = ?" +
-                            "  where id = ? ");
+            if (closeBid) {
+                preparedStatement = connection
+                        .prepareStatement("update auction set currentWinner = ?, currentWinningBid = ?, winner = ?, isRunning = 0 " +
+                                "  where id = ? ");
 
-            preparedStatement.setLong(1, bid.getUser());
-            preparedStatement.setLong(2, bid.getId());
-            preparedStatement.setLong(3, bid.getAuction());
+                preparedStatement.setLong(1, bid.getUser());
+                preparedStatement.setLong(2, bid.getId());
+                preparedStatement.setLong(3, bid.getUser());
+                preparedStatement.setLong(4, bid.getAuction());
+
+            } else {
+                preparedStatement = connection
+                        .prepareStatement("update auction set currentWinner = ?, currentWinningBid = ?" +
+                                "  where id = ? ");
+
+                preparedStatement.setLong(1, bid.getUser());
+                preparedStatement.setLong(2, bid.getId());
+                preparedStatement.setLong(3, bid.getAuction());
+            }
+
+
+
 
 
             preparedStatement.executeUpdate();
@@ -565,30 +607,69 @@ public class AuctionServiceImpl implements AuctionService {
 
 
     @Override
-    public void processCurrentWinningBid() {
+    public void processCurrentWinningBid(List<Bid> currentWinningBids) {
         try {
-            List<Bid> currentWinningBids = currentWinningBid();
-            for (Bid b : currentWinningBids) {
-                updateCurrentWinningBid(b);
+
+            // currentWinningBids = currentWinningBid();
+
+            ConcreteIterator bidList = new ConcreteIterator(currentWinningBids);
+            Iterator bidIterator = bidList.getIterator();
+
+            while (bidIterator.hasNext()) {
+                Bid b = (Bid) bidIterator.next();
+                updateCurrentWinningBid(b, false);
             }
+
+            /*
+            for (Bid b : currentWinningBids) {
+                updateCurrentWinningBid(b, false);
+            }*/
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
     @Override
-    public AuctionReport calculateWinningBid(List<AuctionReport> auctionReport) {
+    public List<Auction> calculateWinningBid(List<Bid> bids) {
+
+        List<Auction> auctionWinner = new ArrayList<>();
+        ConcreteIterator bidList = new ConcreteIterator(bids);
+        Iterator bidIterator = bidList.getIterator();
+
+        while (bidIterator.hasNext()) {
+
+            Bid b = (Bid) bidIterator.next();
+            if (Utils.sqlCurrentDate().equals(b.getEndDate()))//TODO ADD TIME FROM CONFIG
+            {
+                updateCurrentWinningBid(b, true);
+
+                Auction auction = new Auction();
+                auction.setId(b.getAuction());
+                auction.setCurrentWinningBid(b.getId());// TODO CURRENT AND FINAL WINNING BID
+                auction.setWinner(b.getUser());// TODO CURRENT AND FINAL WINNING USER
+                auction.setEndDate(b.getEndDate());
+
+                auctionWinner.add(auction);
+            }
+        }
+        return auctionWinner;
+    }
 
 
-        ConcreteIterator auctionList = new ConcreteIterator(auctionReport);
+    public void calculateWinningBidTest(List<Auction> auctions) {
+
+        ConcreteIterator auctionList = new ConcreteIterator(auctions);
         Iterator auctionIterator = auctionList.getIterator();
 
         while (auctionIterator.hasNext()) {
 
+            Auction v = (Auction) auctionIterator.next();
 
+            System.out.println(v.getMinimumPrice());
         }
 
-        return null;
     }
 
 
