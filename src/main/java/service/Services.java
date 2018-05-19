@@ -1,9 +1,9 @@
-package controller;
+package service;
 
 
 import Framework.FactoryPattern.ConcreteTraceFactory;
 import Framework.FactoryPattern.TraceFactory;
-import service.*;
+
 import service.communication.CanCommunicate;
 import service.communication.CommunicationServiceImpl;
 

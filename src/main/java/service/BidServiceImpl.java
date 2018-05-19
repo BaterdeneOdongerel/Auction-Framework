@@ -1,5 +1,6 @@
 package service;
 
+import Framework.SingletonPattern.Singleton;
 import db.ConnectionConfiguration;
 import model.Bid;
 
@@ -12,6 +13,9 @@ import java.util.List;
 
 @Service("bidService")
 public class BidServiceImpl implements BidService {
+
+    private Connection singletonDbConnection = Singleton.INSTANCE.getConnection();
+
     @Override
     public void create(Bid bid) {
         Connection connection = null;
@@ -21,7 +25,7 @@ public class BidServiceImpl implements BidService {
         try {
 
 
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             preparedStatement = connection.
                     prepareStatement("INSERT INTO bid (amount, bidDate, auction, user) "
                             + " VALUES (?, ?, ?, ?)");
@@ -61,7 +65,7 @@ public class BidServiceImpl implements BidService {
         ResultSet resultSet = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             preparedStatement = connection.prepareStatement("SELECT * FROM bid WHERE id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -111,7 +115,7 @@ public class BidServiceImpl implements BidService {
         ResultSet resultSet = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM bid");
 
@@ -160,7 +164,7 @@ public class BidServiceImpl implements BidService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             preparedStatement = connection.prepareStatement("DELETE FROM bid WHERE id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -193,7 +197,7 @@ public class BidServiceImpl implements BidService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             preparedStatement = connection
                     .prepareStatement("UPDATE bid SET " + "amount = ?, bidDate = ?, auction = ?, user=? WHERE id = ?");
 

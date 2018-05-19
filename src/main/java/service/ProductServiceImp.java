@@ -2,6 +2,7 @@ package service;
 
 import Framework.IteratorPattern.ConcreteIterator;
 import Framework.IteratorPattern.Iterator;
+import Framework.SingletonPattern.Singleton;
 import db.ConnectionConfiguration;
 
 import model.LabelValue;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductServiceImp implements ProductService {
-
+    private Connection singletonDbConnection = Singleton.INSTANCE.getConnection();
     public static void main(String args[]){
 
         ProductServiceImp psi = new ProductServiceImp();
@@ -42,7 +43,7 @@ public class ProductServiceImp implements ProductService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             preparedStatement = connection.prepareStatement("INSERT INTO product (name, `desc` , catid, image_path) "
                     + " VALUES (?, ? , ? , ?)");
             preparedStatement.setString(1, product.getName());
@@ -80,7 +81,7 @@ public class ProductServiceImp implements ProductService {
         ResultSet resultSet = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             preparedStatement = connection.prepareStatement("SELECT * FROM product WHERE id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -129,7 +130,7 @@ public class ProductServiceImp implements ProductService {
         ResultSet resultSet = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM product");
 
@@ -179,7 +180,7 @@ public class ProductServiceImp implements ProductService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
 
             preparedStatement = connection.prepareStatement("DELETE from product where id = ?");
             preparedStatement.setInt(1, id);
@@ -212,7 +213,7 @@ public class ProductServiceImp implements ProductService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
 
             preparedStatement = connection.prepareStatement("UPDATE product set name = ? , `desc` = ? , catid = ? , image_path = ?  " +
                     "where id = ?");
@@ -253,7 +254,7 @@ public class ProductServiceImp implements ProductService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             preparedStatement = connection.prepareStatement("SELECT * FROM product WHERE catid = ?");
             preparedStatement.setInt(1, catid);
             resultSet = preparedStatement.executeQuery();
@@ -306,7 +307,7 @@ public class ProductServiceImp implements ProductService {
         ResultSet resultSet = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("select * from product join auction on product.id = auction.product");
 
