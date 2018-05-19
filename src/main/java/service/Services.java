@@ -40,13 +40,17 @@ public class Services {
     private static void loadCronJobs() {
         TaskQueue queue = TaskQueue.getInstance();
         queue.start();
-        /*TimerTask calculateCurrentWinnerTask = new TimerTask(true) {
-            @Override
-            public void _run() {
-                LoggingService.createLog("Calculate Current Winner", "Calculate Current Winner of all auctions", LogType.Event);
-                AuctionService.processAuction();
-            }
-        }.setExecuteTime(executeTime);*/
+        int[] executeWindow = new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        for (Integer time : executeWindow) {
+            TimerTask calculateCurrentWinnerTask = new TimerTask(true) {
+                @Override
+                public void _run() {
+                    LoggingService.createLog("Calculate Current Winner", "Calculate Current Winner of all auctions", LogType.Event);
+                    AuctionService.processAuction();
+                }
+            }.setExecuteTime(LocalTime.of(time, 0));
+            queue.addTask(calculateCurrentWinnerTask);
+        }
 
         LocalTime executeTime = LocalTime.of(9, 01, 10);
         TimerTask calculateUltimateWinner = new TimerTask(true) {
