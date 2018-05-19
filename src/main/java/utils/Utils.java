@@ -11,7 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import java.time.LocalTime;
 
 
 public class Utils {
@@ -73,8 +73,15 @@ public class Utils {
         return hasValue ? Integer.parseInt(param) : defaultValue;
     }
 
-    public static boolean isTime(LocalDateTime date) {
-        LocalDateTime now = LocalDateTime.now();
-        return date.isAfter(now.minusMinutes(1)) && date.isBefore(now.plusMinutes(1));
+    public static boolean isTime(LocalTime time) {
+        if (time == null) return false;
+        LocalTime now = LocalTime.now();
+        return time.isAfter(now.minusMinutes(1)) && time.isBefore(now.plusMinutes(1));
+    }
+
+    public static boolean isDate(LocalDate date) {
+        if (date == null) return false;
+        LocalDate now = LocalDate.now();
+        return now.getChronology().compareTo(date.getChronology()) == 0;
     }
 }
