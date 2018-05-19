@@ -2,6 +2,8 @@ package service;
 
 
 import Framework.FactoryPattern.ConcreteTraceFactory;
+import Framework.FactoryPattern.FileTrace;
+import Framework.FactoryPattern.Trace;
 import Framework.FactoryPattern.TraceFactory;
 import Framework.IteratorPattern.ConcreteIterator;
 import Framework.IteratorPattern.Iterator;
@@ -30,8 +32,11 @@ import java.util.List;
 public class AuctionServiceImpl extends AbstractAuctionTemplate implements AuctionService {
     public static void main(String arg[]) throws ParseException {
 
-        TraceFactory traceFactory = traceFactory = new ConcreteTraceFactory();
-        traceFactory.getTracer(TraceValue.TRACE.name()).error("Test Log");
+      /*  TraceFactory traceFactory  = ConcreteTraceFactory.getFactory();
+        Trace t = traceFactory.getTracer(TraceValue.TRACE.name().toLowerCase() + ".log");
+        t.debug("uuuu");
+        */
+        Utils.logEvent("Testing Lukman");
 
         AuctionServiceImpl a = new AuctionServiceImpl();
 
@@ -409,14 +414,14 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -543,27 +548,27 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -604,20 +609,20 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -645,7 +650,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
             }*/
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         }
     }
 
@@ -682,7 +687,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
                 }
             }
         } catch (Exception e) {
-            Services.traceFactory.getTracer(TraceValue.TRACE.name()).error(e.getMessage());
+            Utils.logEvent(e.getMessage());
         }
         return auctionWinner;
     }

@@ -5,6 +5,7 @@ import model.Event;
 import props.EmailProp;
 import service.communication.CommunicationType;
 import service.communication.Option;
+import utils.Utils;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
@@ -62,9 +63,9 @@ public class LoggingService {
             logger.info(name + " : " + content);
 
         } catch (SecurityException e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         }
     }
 }

@@ -2,6 +2,7 @@ package props;
 
 
 import db.ConnectionConfiguration;
+import utils.Utils;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -18,7 +19,7 @@ public enum SMSProp {
         try {
             prop.load(ConnectionConfiguration.class.getClassLoader().getResourceAsStream("sms.properties"));
         } catch (IOException e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         }
     }
 

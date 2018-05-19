@@ -9,13 +9,15 @@ import java.io.Writer;
 public class FileTrace implements Trace {
     private static final String LOG_FILE_NAME = "trace.log";
     private static final String ERR_LOG_FILE_NAME = "err_trace.log";
+
     private volatile boolean isDebuggable;
 
 
     private void writeToFile(String fileName, String message) {
         try (FileOutputStream fos = new FileOutputStream(fileName, true)) {
             Writer writer = new PrintWriter(fos);
-            writer.write(message);
+            // writer.write("\n");
+            writer.write("\n" + message);
             writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -29,7 +31,7 @@ public class FileTrace implements Trace {
 
     @Override
     public void debug(String message) {
-        writeToFile(ERR_LOG_FILE_NAME, message);
+        writeToFile(LOG_FILE_NAME, message);
     }
 
     @Override

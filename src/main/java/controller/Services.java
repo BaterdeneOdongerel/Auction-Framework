@@ -27,7 +27,7 @@ public class Services {
         ProductService = new ProductServiceImp();
         EventService = new EventServiceImpl();
         //communicator = new CommunicationServiceImpl();
-        traceFactory = new ConcreteTraceFactory();
+        traceFactory = ConcreteTraceFactory.getFactory();
     }
 
 }

@@ -1,5 +1,8 @@
 package utils;
 
+import Framework.FactoryPattern.Trace;
+import controller.Services;
+
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -8,11 +11,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+
 
 
 public class Utils {
 
+
+    public static void logEvent(String msg) {
+        Trace tFile = Services.traceFactory.getTracer(TraceValue.TRACE.name().toLowerCase() + ".log");
+        Trace tConsole = Services.traceFactory.getTracer(TraceValue.CONSOLE.name().toLowerCase());
+        tConsole.error(sqlCurrentDate() + ":" + msg);
+        tFile.error(sqlCurrentDate() + ":" + msg);
+    }
 
     public static String status(boolean value) {
         return value == true ? "Open" : "Closed";
