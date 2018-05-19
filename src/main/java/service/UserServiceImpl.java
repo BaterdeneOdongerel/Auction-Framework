@@ -1,7 +1,10 @@
 package service;
 
 
+import Framework.IteratorPattern.ConcreteIterator;
+import Framework.IteratorPattern.Iterator;
 import db.ConnectionConfiguration;
+import model.Auction;
 import model.LabelValue;
 
 import model.User;
@@ -348,6 +351,18 @@ public class UserServiceImpl implements UserService {
     public List<LabelValue> getUserListForDropDown() {
         List<LabelValue> selectItems = new ArrayList<>();
 
+        ConcreteIterator userList = new ConcreteIterator(selectAll());
+        Iterator userIterator = userList.getIterator();
+
+        while (userIterator.hasNext()) {
+
+            User u = (User) userIterator.next();
+            LabelValue l = new LabelValue();
+            l.setLabel(u.getFirstName() + " " + u.getLastName());
+            l.setValue(u.getUserId());
+            selectItems.add(l);
+        }
+/*
         for (User u : selectAll()) {
 
             LabelValue l = new LabelValue();
@@ -356,7 +371,7 @@ public class UserServiceImpl implements UserService {
             selectItems.add(l);
 
 
-        }
+        }*/
 
         return selectItems;
     }
