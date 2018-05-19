@@ -10,9 +10,6 @@
             <a href="/list_category">Category</a>
         </li>
         <li>
-            <a href="/list_product">Product</a>
-        </li>
-        <li>
             <a href="/list_auction">Auction</a></li>
         <li>
             <a href="/list_user">User</a></li>
