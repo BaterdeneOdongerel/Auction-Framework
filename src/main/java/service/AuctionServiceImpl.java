@@ -6,6 +6,7 @@ import Framework.IteratorPattern.Iterator;
 import Framework.SingletonPattern.Singleton;
 import Framework.TemplateMethodPattern.AbstractAuctionTemplate;
 
+import db.ConnectionConfiguration;
 import model.User;
 
 import model.Auction;
@@ -26,8 +27,6 @@ import java.util.List;
 
 @Service("auctionService")
 public class AuctionServiceImpl extends AbstractAuctionTemplate implements AuctionService {
-
-    private Connection singletonDbConnection = Singleton.INSTANCE.getConnection();
 
     public static void main(String arg[]) throws ParseException {
 
@@ -120,7 +119,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
         ResultSet resultSet = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("select a.* , p.id as pid , p.name , p.desc from auction a inner join product p on a.product = p.id where isrunning = 1");
             resultSet = preparedStatement.executeQuery();
 
@@ -180,7 +179,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
         ResultSet resultSet = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("select a.* , p.id as pid , p.name , p.desc,first_name,last_name from auction a" +
                     " inner join product p on a.product = p.id inner join user u on u.user_id= a.bidOwner " +
                     " WHERE a.id = ?");
@@ -247,7 +246,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
         ResultSet resultSet = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("select a.* , p.id as pid , p.name , p.desc,first_name,last_name " +
                     " from auction a inner join product p on a.product = p.id inner join user u on u.user_id= a.bidOwner ");
             resultSet = preparedStatement.executeQuery();
@@ -282,7 +281,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null) {
+            /*if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
@@ -302,7 +301,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }
+            }*/
         }
 
         return auctions;
@@ -314,7 +313,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("DELETE FROM auction WHERE id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -347,7 +346,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.
                     prepareStatement("INSERT INTO auction (startDate, endDate, minimumPrice, bidOwner,isRunning,product) "
                             + " VALUES (?, ?, ?, ?, ?,?)");
@@ -389,7 +388,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection
                     .prepareStatement("UPDATE auction SET " + "startDate = ?, endDate = ?, minimumPrice = ?, bidOwner=? " +
                             ", isRunning= ?,product = ? WHERE id = ?");
@@ -435,7 +434,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
         ResultSet resultSet = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("select " +
                     "b.id bidId," +
                     "a.id auctionId,startDate,endDate,bidDate,b.amount bidAmount,a.minimumPrice," +
@@ -523,7 +522,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
         ResultSet resultSet = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("SELECT b.id,b.user,b.auction,b.amount,b.bidDate, a.endDate " +
                     " FROM bid b,auction a " +
                     " WHERE amount=(SELECT MAX(amount) " +
@@ -580,7 +579,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             if (closeBid) {
                 preparedStatement = connection
                         .prepareStatement("update auction set currentWinner = ?, currentWinningBid = ?, winner = ?, isRunning = 0 " +

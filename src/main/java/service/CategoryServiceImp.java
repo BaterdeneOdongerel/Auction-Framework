@@ -11,7 +11,6 @@ import java.util.List;
 
 public class CategoryServiceImp implements CategoryService {
 
-    private Connection singletonDbConnection = Singleton.INSTANCE.getConnection();
     public static void main(String args[]){
         CategoryServiceImp c = new CategoryServiceImp();
         c.delete(2);
@@ -27,7 +26,7 @@ public class CategoryServiceImp implements CategoryService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("INSERT INTO category (name, `desc`) "
                     + " VALUES (?, ?)");
             preparedStatement.setString(1, category.getName());
@@ -63,7 +62,7 @@ public class CategoryServiceImp implements CategoryService {
         ResultSet resultSet = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("SELECT * FROM category WHERE id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -111,7 +110,7 @@ public class CategoryServiceImp implements CategoryService {
         ResultSet resultSet = null;
 
         try {
-            connection = singletonDbConnection;
+            connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM category");
 
@@ -158,8 +157,7 @@ public class CategoryServiceImp implements CategoryService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = singletonDbConnection;
-
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("DELETE from category where id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -191,8 +189,7 @@ public class CategoryServiceImp implements CategoryService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = singletonDbConnection;
-
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement("UPDATE category set name = ? , `desc` = ? where id = ?");
             preparedStatement.setInt(3, id);
             preparedStatement.setString(1, category.getName());
