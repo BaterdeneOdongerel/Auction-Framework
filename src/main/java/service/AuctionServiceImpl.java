@@ -17,7 +17,7 @@ import model.Bid;
 import model.Product;
 import model.Report.AuctionReport;
 import org.springframework.stereotype.Service;
-import utils.TraceValue;
+
 import utils.Utils;
 
 import java.sql.*;
