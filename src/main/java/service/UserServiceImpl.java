@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
                 user.setUserId(resultSet.getInt("user_id"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("communication"));
+                user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
             }
 

@@ -664,25 +664,15 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
             while (bidIterator.hasNext()) {
 
                 Bid b = (Bid) bidIterator.next();
+                updateCurrentWinningBid(b, true);
 
-                Date currentDate = Utils.sqlCurrentDate();
-                Date endDate = b.getEndDate();
+                Auction auction = new Auction();
+                auction.setId(b.getAuction());
+                auction.setCurrentWinningBid(b.getId());
+                auction.setWinner(b.getUser());
+                auction.setEndDate(b.getEndDate());
 
-
-                if (currentDate.equals(endDate))//TODO ADD TIME FROM CONFIG
-                {
-                    updateCurrentWinningBid(b, true);
-
-                    Auction auction = new Auction();
-                    auction.setId(b.getAuction());
-                    auction.setCurrentWinningBid(b.getId());// TODO CURRENT AND FINAL WINNING BID
-                    auction.setWinner(b.getUser());// TODO CURRENT AND FINAL WINNING USER
-                    auction.setEndDate(b.getEndDate());
-
-                    auctionWinner.add(auction);
-
-
-                }
+                auctionWinner.add(auction);
             }
         } catch (Exception e) {
             Utils.logEvent(e.getMessage());

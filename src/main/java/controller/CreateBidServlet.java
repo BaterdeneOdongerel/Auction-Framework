@@ -22,6 +22,7 @@ public class CreateBidServlet extends BaseServlet {
         t.setAuction(Long.parseLong(auctionId));
         t.setAmount(Double.parseDouble(amount));
         bidService.create(t);
+        Services.AuctionService.processAuction();
         response.sendRedirect("/");
     }
 

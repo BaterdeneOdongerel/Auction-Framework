@@ -41,7 +41,7 @@ public class Services {
     private static void loadCronJobs() {
         TaskQueue queue = TaskQueue.getInstance();
         queue.start();
-        int[] executeWindow = new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        int[] executeWindow = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
         for (Integer time : executeWindow) {
             TimerTask calculateCurrentWinnerTask = new TimerTask(true) {
                 @Override
@@ -52,34 +52,6 @@ public class Services {
             }.setExecuteTime(LocalTime.of(time, 0));
             queue.addTask(calculateCurrentWinnerTask);
         }
-
-        LocalTime executeTime = LocalTime.of(11, 18, 10);
-        TimerTask calculateUltimateWinner = new TimerTask(true) {
-            @Override
-            public void _run() {
-                LoggingService.createLog("Calculate Ultimate Winner", "Calculate Ultimate Winner of all auctions", LogType.Event);
-                List<Auction> results = AuctionService.processAuction();
-                for (Auction auction : results) {
-                    User user = UserService.selectById(new Long(auction.getWinner()).intValue());
-                    Option emailOption = new Option.Builder()
-                            .withTo(user.getEmail())
-                            .withContent("Winner you are")
-                            .withSubject("You're the winner")
-                            .withName(user.getFirstName())
-                            .build();
-                    Option smsOption = new Option.Builder()
-                            .withTo("+16414511523")
-                            .withContent("Winner you are")
-                            .withSubject("You're the winner")
-                            .withName(user.getFirstName())
-                            .build();
-                    Communicator.send(emailOption, CommunicationType.EMAIL);
-                    Communicator.send(smsOption, CommunicationType.SMS);
-                }
-            }
-        }.setExecuteTime(executeTime);
-
-        queue.addTask(calculateUltimateWinner);
     }
 
 }

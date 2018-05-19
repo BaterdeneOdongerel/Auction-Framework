@@ -9,5 +9,4 @@ public class Product {
     private String desc;
     private int catid;
     private String imagePath;
-
     }
