@@ -33,13 +33,13 @@ public class BidServiceImpl implements BidService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
 
@@ -47,7 +47,7 @@ public class BidServiceImpl implements BidService {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -75,27 +75,27 @@ public class BidServiceImpl implements BidService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -120,33 +120,33 @@ public class BidServiceImpl implements BidService {
                 bid.setId(resultSet.getInt("id"));
                 bid.setAmount(resultSet.getDouble("amount"));
                 bid.setBidDate(resultSet.getDate("bidDate"));
-                // bid.setUser(resultSet.getInt("user"));
-                //bid.setAuction(resultSet.getInt("auction"));
+                bid.setUser(resultSet.getInt("user"));
+                bid.setAuction(resultSet.getInt("auction"));
                 bids.add(bid);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -168,20 +168,20 @@ public class BidServiceImpl implements BidService {
             System.out.println("DELETE FROM bid WHERE id = ?");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -205,20 +205,20 @@ public class BidServiceImpl implements BidService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }

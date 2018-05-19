@@ -2,6 +2,7 @@ package props;
 
 
 import db.ConnectionConfiguration;
+import utils.Utils;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -17,7 +18,7 @@ public enum DatabaseProp {
         try {
             prop.load(ConnectionConfiguration.class.getClassLoader().getResourceAsStream("database.properties"));
         } catch (IOException e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         }
     }
 

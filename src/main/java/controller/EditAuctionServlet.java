@@ -13,6 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @WebServlet("/edit_auction")
 public class EditAuctionServlet extends BaseServlet {
@@ -57,6 +59,10 @@ public class EditAuctionServlet extends BaseServlet {
     protected void post(HttpServletRequest request, HttpServletResponse response) throws Exception {
         AuctionService auctionServiceImp = Services.AuctionService;
 
+        // String[] names = request.getParameterValues("names");
+        //List list =  Arrays.asList(names);
+        // String[] isRunning1= request.getParameterValues("isRunning");
+
         String delete_id = request.getParameter("delete_id");
         if (delete_id != null) { // delete
             auctionServiceImp.delete(Integer.parseInt(delete_id));
@@ -67,7 +73,7 @@ public class EditAuctionServlet extends BaseServlet {
             String product = request.getParameter("product");
             String bidOwner = request.getParameter("bidOwner");
             String minimumPrice = request.getParameter("minimumPrice");
-            String isRunning = request.getParameter("isRunning");//TODO CHECK
+            String[] isRunning = request.getParameterValues("isRunning");//TODO CHECK
 
             Auction auction = new Auction();
 
@@ -76,7 +82,7 @@ public class EditAuctionServlet extends BaseServlet {
             auction.setMinimumPrice(Double.valueOf(minimumPrice));
             auction.setProduct(Integer.parseInt(product));
             auction.setBidOwner(Integer.parseInt(bidOwner));
-            auction.setRunning((!isRunning.isEmpty() && isRunning != null) && Boolean.getBoolean(isRunning));
+            auction.setRunning((!isRunning[0].isEmpty() && isRunning != null) && Boolean.getBoolean(isRunning[0]));
 
 
             if (sid == null || "-1".equals(sid)) { // create

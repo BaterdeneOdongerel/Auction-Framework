@@ -2,7 +2,7 @@ package model;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
+
 import java.sql.Date;
 
 @Data
@@ -12,5 +12,6 @@ public class Bid {
     private Date bidDate;
     private long auction;
     private long user;
+    private Date endDate;
 
 }

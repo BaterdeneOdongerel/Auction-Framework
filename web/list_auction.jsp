@@ -61,7 +61,7 @@
                     <td>${a.status}</td>
 
                     <td><a href="/edit_auction?id=${a.id}"> Edit </a></td>
-                    <td><a href="/edit_auction?delete_id=${a.id}}"> Delete </a></td>
+                    <td><a href="/edit_auction?delete_id=${a.id}"> Delete </a></td>
 
                 </tr>
             </c:forEach>

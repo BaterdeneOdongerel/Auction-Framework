@@ -1,6 +1,7 @@
 package model.Report;
 
 import lombok.Data;
+import model.User;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -15,6 +16,7 @@ public class AuctionReport {
     private Date endDate;
     private BigDecimal minimumPrice;
 
+
     private String bidOwner;
     private String isRunning;
 
@@ -22,10 +24,11 @@ public class AuctionReport {
 
     private String currentWinner;
     private String currentWinningBid;
-    private String winner;
+    private long winner;
 
     private double bidAmount;
     private Date bidDate;
 
     private String bidUser;
+    //public User bidWinnerUser;
 }

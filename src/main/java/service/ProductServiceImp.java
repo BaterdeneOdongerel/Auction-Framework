@@ -1,11 +1,15 @@
 package service;
 
+import Framework.IteratorPattern.ConcreteIterator;
+import Framework.IteratorPattern.Iterator;
 import db.ConnectionConfiguration;
 
 import model.LabelValue;
 
 import model.Auction;
 import model.Product;
+import model.User;
+import utils.Utils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -48,13 +52,13 @@ public class ProductServiceImp implements ProductService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
 
@@ -62,7 +66,7 @@ public class ProductServiceImp implements ProductService {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -90,27 +94,27 @@ public class ProductServiceImp implements ProductService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -133,34 +137,35 @@ public class ProductServiceImp implements ProductService {
                 Product product = new Product();
                 product.setId(resultSet.getInt("id"));
                 product.setName(resultSet.getString("name"));
+
+                product.setImagePath(resultSet.getString("image_path"));
                 product.setDesc(resultSet.getString("desc"));
                 product.setCatid(resultSet.getInt("catid"));
-                product.setImagePath(resultSet.getString("image_path"));
                 products.add(product);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -181,13 +186,13 @@ public class ProductServiceImp implements ProductService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
 
@@ -195,7 +200,7 @@ public class ProductServiceImp implements ProductService {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -219,13 +224,13 @@ public class ProductServiceImp implements ProductService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
 
@@ -233,7 +238,7 @@ public class ProductServiceImp implements ProductService {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -255,36 +260,37 @@ public class ProductServiceImp implements ProductService {
 
             while (resultSet.next()) {
                 Product product = new Product();
-                product.setId(resultSet.getInt("id"));
                 product.setName(resultSet.getString("name"));
                 product.setDesc(resultSet.getString("desc"));
+                product.setId(resultSet.getInt("id"));
+
                 product.setCatid(resultSet.getInt("catid"));
                 product.setImagePath(resultSet.getString("image_path"));
                 products.add(product);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -318,27 +324,27 @@ public class ProductServiceImp implements ProductService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -350,6 +356,18 @@ public class ProductServiceImp implements ProductService {
     public List<LabelValue> getProductListForDropDown() {
         List<LabelValue> selectItems = new ArrayList<>();
 
+        ConcreteIterator productList = new ConcreteIterator(selectAll());
+        Iterator productIterator = productList.getIterator();
+
+        while (productIterator.hasNext()) {
+
+            Product p = (Product) productIterator.next();
+            LabelValue l = new LabelValue();
+            l.setLabel(p.getName());
+            l.setValue(p.getId());
+            selectItems.add(l);
+        }
+/*
         for (Product p : selectAll()) {
 
             LabelValue l = new LabelValue();
@@ -358,7 +376,7 @@ public class ProductServiceImp implements ProductService {
             selectItems.add(l);
 
         }
-
+*/
         return selectItems;
     }
 }
