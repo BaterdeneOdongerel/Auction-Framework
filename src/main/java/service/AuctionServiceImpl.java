@@ -1,14 +1,10 @@
 package service;
 
 
-import Framework.FactoryPattern.ConcreteTraceFactory;
-import Framework.FactoryPattern.FileTrace;
-import Framework.FactoryPattern.Trace;
-import Framework.FactoryPattern.TraceFactory;
 import Framework.IteratorPattern.ConcreteIterator;
 import Framework.IteratorPattern.Iterator;
 import Framework.TemplateMethodPattern.AbstractAuctionTemplate;
-import controller.Services;
+
 import db.ConnectionConfiguration;
 import model.User;
 

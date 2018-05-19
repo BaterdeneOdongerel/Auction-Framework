@@ -147,17 +147,17 @@
 
                         <div class="form-group">
 
-                            <label class="control-label col-sm-2" for="isRunning">Is Running?:</label>
+                            <label class="control-label col-sm-2" for="isRunning">Open?</label>
 
                             <div class="col-sm-9">
 
-                                <input type="checkbox" value="${auction.status}" name="isRunning"
+                                <input type="checkbox" value="" name="isRunning"
                                        class="form-control"
                                        id="isRunning"/>
 
-                                <input type="checkbox" name="names" value="Yashwant"/>Yashwant
+                                <!--input type="checkbox" name="names" value="Yashwant"/>Yashwant
                                 <input type="checkbox" name="names" value="Vishal"/>Vishal
-                                <input type="checkbox" name="names" value="Suhas"/>Suhas
+                                <input type="checkbox" name="names" value="Suhas"/ Suhas-->
                             </div>
 
                         </div>
