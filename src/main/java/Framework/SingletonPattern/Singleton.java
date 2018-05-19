@@ -1,18 +1,17 @@
 package Framework.SingletonPattern;
 
+
 import props.DatabaseProp;
 import utils.Utils;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+
 public enum Singleton {
 
     INSTANCE;
-
-    public static void doSomething() {
-        //do something
-    }
 
     public static Connection getConnection() {
         Connection connection = null;
@@ -33,4 +32,5 @@ public enum Singleton {
         }
         return connection;
     }
+
 }
