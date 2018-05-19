@@ -69,7 +69,7 @@ public class Services {
                             .withName(user.getFirstName())
                             .build();
                     Communicator.send(emailOption, CommunicationType.EMAIL);
-                    Communicator.send(emailOption, CommunicationType.SMS);
+                    Communicator.send(smsOption, CommunicationType.SMS);
                 }
             }
         }.setExecuteTime(executeTime);
