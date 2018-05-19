@@ -33,4 +33,12 @@ public enum Singleton {
         return connection;
     }
 
+    public static void closeConnection() {
+        try {
+            getConnection().close();
+        } catch (Exception e) {
+            Utils.logEvent(e.getMessage());
+        }
+    }
+
 }

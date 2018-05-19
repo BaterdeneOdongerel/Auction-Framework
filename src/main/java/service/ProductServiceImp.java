@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductServiceImp implements ProductService {
+
+
     public static void main(String args[]){
 
         ProductServiceImp psi = new ProductServiceImp();
@@ -43,6 +45,7 @@ public class ProductServiceImp implements ProductService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("INSERT INTO product (name, `desc` , catid, image_path) "
                     + " VALUES (?, ? , ? , ?)");
             preparedStatement.setString(1, product.getName());
@@ -81,6 +84,7 @@ public class ProductServiceImp implements ProductService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("SELECT * FROM product WHERE id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -130,6 +134,7 @@ public class ProductServiceImp implements ProductService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM product");
 
@@ -180,6 +185,7 @@ public class ProductServiceImp implements ProductService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
 
             preparedStatement = connection.prepareStatement("DELETE from product where id = ?");
             preparedStatement.setInt(1, id);
@@ -213,6 +219,7 @@ public class ProductServiceImp implements ProductService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
 
             preparedStatement = connection.prepareStatement("UPDATE product set name = ? , `desc` = ? , catid = ? , image_path = ?  " +
                     "where id = ?");
@@ -254,6 +261,7 @@ public class ProductServiceImp implements ProductService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("SELECT * FROM product WHERE catid = ?");
             preparedStatement.setInt(1, catid);
             resultSet = preparedStatement.executeQuery();
@@ -307,6 +315,7 @@ public class ProductServiceImp implements ProductService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("select * from product join auction on product.id = auction.product");
 
