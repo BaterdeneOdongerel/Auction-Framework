@@ -42,7 +42,11 @@ public class TaskQueue extends Thread {
                     if (timeToExecuteNonConcurrentTask || timeToExecuteDailyTask) {
                         ((Runnable) () -> task.run()).run();
                         tasks.remove(task);
+                    } else {
+                        tasks.remove(task);
+                        tasks.addLast(task);
                     }
+
                 }
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

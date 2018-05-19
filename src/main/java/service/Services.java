@@ -21,9 +21,9 @@ public class Services {
     public static UserService UserService;
     public static AuctionService AuctionService;
     public static ProductService ProductService;
-
     public static EventServiceImpl EventService;
     public static CanCommunicate Communicator;
+    public static BidService BidService;
 
     public static TraceFactory TraceFactory;
 
@@ -34,6 +34,7 @@ public class Services {
         EventService = new EventServiceImpl();
         Communicator = new CommunicationServiceImpl();
         TraceFactory = ConcreteTraceFactory.getFactory();
+        BidService = new BidServiceImpl();
         loadCronJobs();
     }
 
@@ -52,7 +53,7 @@ public class Services {
             queue.addTask(calculateCurrentWinnerTask);
         }
 
-        LocalTime executeTime = LocalTime.of(9, 01, 10);
+        LocalTime executeTime = LocalTime.of(11, 18, 10);
         TimerTask calculateUltimateWinner = new TimerTask(true) {
             @Override
             public void _run() {

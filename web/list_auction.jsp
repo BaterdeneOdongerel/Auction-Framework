@@ -34,6 +34,9 @@
         <a href="edit_auction">
             <button type="button" class="btn btn-primary btn-lg">Create Auction</button>
         </a>
+        <a href="calculate_auctions">
+            <button type="button" class="btn btn-primary btn-lg">Calculate Auctions</button>
+        </a>
         <table class="table table-striped">
             <thead>
             <tr>

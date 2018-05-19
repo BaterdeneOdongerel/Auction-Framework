@@ -1,9 +1,7 @@
 package service;
 
-import Framework.SingletonPattern.Singleton;
 import db.ConnectionConfiguration;
 import model.Bid;
-
 import org.springframework.stereotype.Service;
 import utils.Utils;
 
@@ -18,7 +16,7 @@ public class BidServiceImpl implements BidService {
     public void create(Bid bid) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        UserServiceImpl useImpl = new UserServiceImpl();
+        int userId = Services.UserService.getCurrentUser().getUserId();
 
         try {
             connection = ConnectionConfiguration.getConnection();
@@ -28,7 +26,7 @@ public class BidServiceImpl implements BidService {
             preparedStatement.setDouble(1, bid.getAmount());
             preparedStatement.setDate(2, Utils.sqlCurrentDate());
             preparedStatement.setLong(3, bid.getAuction());
-            preparedStatement.setLong(4, useImpl.getCurrentUser().getUserId());
+            preparedStatement.setLong(4, userId);
 
             preparedStatement.executeUpdate();
 
