@@ -151,7 +151,7 @@
 
                             <div class="col-sm-9">
 
-                                <input type="checkbox" value="true" name="isRunning"
+                                <input type="checkbox" value="" name="isRunning"
                                        class="form-control"
                                        id="isRunning"/>
 
