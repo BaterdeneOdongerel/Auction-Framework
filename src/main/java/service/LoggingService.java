@@ -42,7 +42,7 @@ public class LoggingService {
                 .withContent(content)
                 .withSubject("Exception: " + name)
                 .build();
-        Services.communicator.send(emailOption, CommunicationType.EMAIL);
+        Services.Communicator.send(emailOption, CommunicationType.EMAIL);
     }
 
     private static void createEvent(String name, String content) {

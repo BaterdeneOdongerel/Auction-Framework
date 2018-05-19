@@ -18,8 +18,8 @@ public class Utils {
 
 
     public static void logEvent(String msg) {
-        Trace tFile = Services.traceFactory.getTracer(TraceValue.TRACE.name().toLowerCase() + ".log");
-        Trace tConsole = Services.traceFactory.getTracer(TraceValue.CONSOLE.name().toLowerCase());
+        Trace tFile = Services.TraceFactory.getTracer(TraceValue.TRACE.name().toLowerCase() + ".log");
+        Trace tConsole = Services.TraceFactory.getTracer(TraceValue.CONSOLE.name().toLowerCase());
         tConsole.error(sqlCurrentDate() + ":" + msg);
         tFile.error(sqlCurrentDate() + ":" + msg);
     }
