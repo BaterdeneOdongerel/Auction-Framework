@@ -1,5 +1,6 @@
 package service;
 
+import Framework.SingletonPattern.Singleton;
 import db.ConnectionConfiguration;
 import model.Event;
 import utils.Utils;
@@ -10,13 +11,15 @@ import java.util.List;
 
 public class EventServiceImpl implements EventService {
 
+    private Connection singletonDbConnection = Singleton.INSTANCE.getConnection();
+
     @Override
     public void create(Event event) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             preparedStatement = connection.prepareStatement("INSERT INTO event (name, `content`) "
                     + " VALUES (?, ?)");
             preparedStatement.setString(1, event.getName());
@@ -56,7 +59,7 @@ public class EventServiceImpl implements EventService {
         Statement statement = null;
         ResultSet resultSet = null;
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM event");
             while (resultSet.next()) {
@@ -102,7 +105,7 @@ public class EventServiceImpl implements EventService {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             preparedStatement = connection.prepareStatement("DELETE from category where id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -132,7 +135,7 @@ public class EventServiceImpl implements EventService {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = singletonDbConnection;
             preparedStatement = connection.prepareStatement("UPDATE category set name = ? , `desc` = ? where id = ?");
             preparedStatement.setInt(3, id);
             preparedStatement.setString(1, category.getName());

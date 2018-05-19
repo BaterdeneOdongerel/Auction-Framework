@@ -4,6 +4,7 @@ package controller;
 import model.Auction;
 import service.AuctionService;
 import service.ProductService;
+import service.Services;
 import service.UserService;
 import utils.Utils;
 
@@ -13,8 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @WebServlet("/edit_auction")
 public class EditAuctionServlet extends BaseServlet {

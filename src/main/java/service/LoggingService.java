@@ -1,6 +1,5 @@
 package service;
 
-import controller.Services;
 import model.Event;
 import props.EmailProp;
 import service.communication.CommunicationType;

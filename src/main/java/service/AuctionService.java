@@ -14,5 +14,4 @@ public interface AuctionService extends CrudTemplate<Auction> {
 
     List<Auction> selectRunning();
 
-    List<Bid> currentWinningBid();
 }
