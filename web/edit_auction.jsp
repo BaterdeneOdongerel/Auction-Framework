@@ -151,13 +151,13 @@
 
                             <div class="col-sm-9">
 
-                                <input type="checkbox" value="${auction.status}" name="isRunning"
+                                <input type="checkbox" value="true" name="isRunning"
                                        class="form-control"
                                        id="isRunning"/>
 
-                                <input type="checkbox" name="names" value="Yashwant"/>Yashwant
+                                <!--input type="checkbox" name="names" value="Yashwant"/>Yashwant
                                 <input type="checkbox" name="names" value="Vishal"/>Vishal
-                                <input type="checkbox" name="names" value="Suhas"/>Suhas
+                                <input type="checkbox" name="names" value="Suhas"/ Suhas-->
                             </div>
 
                         </div>
