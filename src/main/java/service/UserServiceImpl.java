@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
-    private Connection singletonDBConnection = Singleton.INSTANCE.getConnection();
+
     private User currentUser;
 
     public static void main(String[] args) {
@@ -47,7 +47,8 @@ public class UserServiceImpl implements UserService {
         ResultSet resultSet = null;
 
         try {
-            connection = singletonDBConnection;
+            connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE email = ?");
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
@@ -99,7 +100,8 @@ public class UserServiceImpl implements UserService {
         ResultSet resultSet = null;
 
         try {
-            connection = singletonDBConnection;
+            connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -149,7 +151,8 @@ public class UserServiceImpl implements UserService {
         ResultSet resultSet = null;
 
         try {
-            connection = singletonDBConnection;
+            connection = ConnectionConfiguration.getConnection();
+            ;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM user");
 
@@ -198,7 +201,8 @@ public class UserServiceImpl implements UserService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = singletonDBConnection;
+            connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("DELETE FROM user WHERE user_id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -231,7 +235,8 @@ public class UserServiceImpl implements UserService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = singletonDBConnection;
+            connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection
                     .prepareStatement("UPDATE user SET " + "first_name = ?, last_name = ?, email = ? WHERE user_id = ?");
 
@@ -268,7 +273,8 @@ public class UserServiceImpl implements UserService {
         ResultSet resultSet = null;
         boolean ret = false;
         try {
-            connection = singletonDBConnection;
+            connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE email = ? and password = ? ");
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
@@ -311,7 +317,8 @@ public class UserServiceImpl implements UserService {
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = singletonDBConnection;
+            connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("INSERT INTO user (first_name, last_name, email, password, user_name) "
                     + " VALUES (?, ?, ?, ?, ?)");
             preparedStatement.setString(1, user.getFirstName());
@@ -383,7 +390,8 @@ public class UserServiceImpl implements UserService {
         ResultSet resultSet = null;
 
         try {
-            connection = singletonDBConnection;
+            connection = ConnectionConfiguration.getConnection();
+            ;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM user WHERE user_name like '%"+ name+"%'");
             System.out.print("SELECT * FROM user WHERE user_name like '%"+ name+"%'");
