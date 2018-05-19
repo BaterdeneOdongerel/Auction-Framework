@@ -147,7 +147,7 @@
 
                         <div class="form-group">
 
-                            <label class="control-label col-sm-2" for="isRunning">Is Running?:</label>
+                            <label class="control-label col-sm-2" for="isRunning">Open?</label>
 
                             <div class="col-sm-9">
 
