@@ -41,3 +41,11 @@ CREATE TABLE IF NOT EXISTS `Product` (
 
 insert into Product(`name` , `desc` , `catid` , `bid_price`) values('product 1' , 'wda wd a desc ' ,2, 220);
 select * from product;
+
+CREATE TABLE `Event` (
+	`id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`name` varchar(100) DEFAULT NULL,
+	`content` varchar(200) DEFAULT NULL,
+	`created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
