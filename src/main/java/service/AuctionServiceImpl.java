@@ -175,6 +175,39 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
     }
 
     @Override
+    public void startAuction(Auction auction) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = ConnectionConfiguration.getConnection();
+            preparedStatement = connection
+                    .prepareStatement("update auction set isrunning = 1" +
+                            "  where id = ? ");
+            preparedStatement.setLong(1, auction.getId());
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            Utils.logEvent(e.getMessage());
+        } finally {
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    Utils.logEvent(e.getMessage());
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    Utils.logEvent(e.getMessage());
+                }
+            }
+        }
+
+    }
+
+    @Override
     public Auction selectById(int id) {
         Auction auction = new Auction();
         Connection connection = null;
@@ -362,9 +395,7 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
             preparedStatement.setDate(2, auction.getEndDate());
             preparedStatement.setDouble(3, auction.getMinimumPrice());
             preparedStatement.setLong(4, auction.getBidOwner());
-
-            // preparedStatement.setBoolean(5, auction.isRunning());//TODO this should be default
-            preparedStatement.setBoolean(5, true);//TODO this should be default
+            preparedStatement.setBoolean(5, false);
             preparedStatement.setLong(6, auction.getProduct());
             preparedStatement.executeUpdate();
 
@@ -482,17 +513,10 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
                 auction.setBidAmount(resultSet.getDouble("bidAmount"));
                 auction.setProduct(resultSet.getString("product"));
                 auction.setBidUser(resultSet.getString("bidUser"));
-
                 auction.setBidDate(resultSet.getDate("bidDate"));
-
                 auction.setBidOwner(resultSet.getString("bidOwner"));
-                // auction.bidWinnerUser = new User();
-
-
-
                 auctions.add(auction);
             }
-
         } catch (Exception e) {
             Utils.logEvent(e.getMessage());
         } finally {
@@ -580,41 +604,30 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
                 }
             }
         }
-
         return bids;
     }
 
     private void updateCurrentWinningBid(Bid bid, boolean closeBid) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
         try {
             connection = ConnectionConfiguration.getConnection();
-            ;
             if (closeBid) {
                 preparedStatement = connection
                         .prepareStatement("update auction set currentWinner = ?, currentWinningBid = ?, winner = ?, isRunning = 0 " +
                                 "  where id = ? ");
-
                 preparedStatement.setLong(1, bid.getUser());
                 preparedStatement.setLong(2, bid.getId());
                 preparedStatement.setLong(3, bid.getUser());
                 preparedStatement.setLong(4, bid.getAuction());
-
             } else {
                 preparedStatement = connection
                         .prepareStatement("update auction set currentWinner = ?, currentWinningBid = ?" +
                                 "  where id = ? ");
-
                 preparedStatement.setLong(1, bid.getUser());
                 preparedStatement.setLong(2, bid.getId());
                 preparedStatement.setLong(3, bid.getAuction());
             }
-
-
-
-
-
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {

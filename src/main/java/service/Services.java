@@ -11,6 +11,7 @@ import service.task.TaskQueue;
 import service.task.TimerTask;
 
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,6 +42,7 @@ public class Services {
     private static void loadCronJobs() {
         TaskQueue queue = TaskQueue.getInstance();
         queue.start();
+        //TODO: modify this to run every minute to do the demo
         int[] executeWindow = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
         for (Integer time : executeWindow) {
             TimerTask calculateCurrentWinnerTask = new TimerTask(true) {
@@ -48,10 +50,16 @@ public class Services {
                 public void _run() {
                     LoggingService.createLog("Calculate Current Winner", "Calculate Current Winner of all auctions", LogType.Event);
                     AuctionService.processAuction();
+                    List<Auction> auctions = AuctionService.selectAll();
+                    for (Auction auction : auctions) {
+                        Date now = new Date();
+                        if (auction.getStartDate().compareTo(now) == 0) {
+                            AuctionService.startAuction(auction);
+                        }
+                    }
                 }
             }.setExecuteTime(LocalTime.of(time, 0));
             queue.addTask(calculateCurrentWinnerTask);
         }
     }
-
 }
