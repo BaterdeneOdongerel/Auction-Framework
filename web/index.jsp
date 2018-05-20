@@ -46,12 +46,8 @@
             <div class="pull-left welcome-text">
                 <p>Welcome to Auction X <a href="/login">Sign in</a> or <a href="signup">Register</a></p>
             </div>
-
-
         </div>
     </div>
-
-
 </header>
 
 <!-- home area-->
@@ -113,8 +109,11 @@
                                     <h3>${p.name}</h3>
                                     <h4>${p.currentWinningBid}</h4>
                                     <p>${p.startDate} TO ${p.endDate}</p>
-                                    <a class="add-cart text-uppercase"> Bid</a>
-
+                                    <form method="POST" action="/create_bid">
+                                        <input type="number" name="amount"/>
+                                        <input class="hidden" name="auctionId" value="${p.id}"/>
+                                        <button type="submit" class="add-cart text-uppercase btn btn-danger"> Bid</button>
+                                    </form>
                                 </div>
                             </div>
                         </c:forEach>

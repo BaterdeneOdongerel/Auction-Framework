@@ -37,14 +37,20 @@ public class TaskQueue extends Thread {
                 synchronized (tasks) {
                     while (tasks.isEmpty()) tasks.wait();
                     service.task.TimerTask task = tasks.peek();
-                    if (Utils.isTime(task.getExecuteTime())) {
+                    boolean timeToExecuteDailyTask = task.isDailyTask() && Utils.isTime(task.getExecuteTime());
+                    boolean timeToExecuteNonConcurrentTask = !task.isDailyTask() && Utils.isTime(task.getExecuteTime()) && Utils.isDate(task.getExecuteDate());
+                    if (timeToExecuteNonConcurrentTask || timeToExecuteDailyTask) {
                         ((Runnable) () -> task.run()).run();
                         tasks.remove(task);
+                    } else {
+                        tasks.remove(task);
+                        tasks.addLast(task);
                     }
+
                 }
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Utils.logEvent(e.getMessage());
             }
         }
     }
@@ -60,21 +66,23 @@ public class TaskQueue extends Thread {
         tasks.remove(task);
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         TaskQueue queue = TaskQueue.getInstance();
         queue.start();
-        queue.addTask(new TimerTask(LocalDateTime.of(LocalDate.of(2018, 5, 16), LocalTime.of(10, 43, 10))) {
+        LocalTime executeTime = LocalTime.of(8, 19, 10);
+        LocalTime executeTime2 = LocalTime.of(8, 20, 10);
+        queue.addTask(new TimerTask(true) {
             @Override
             public void _run() {
                 System.out.println("Second");
             }
-        });
-        queue.addTask(new TimerTask(LocalDateTime.of(LocalDate.of(2018, 5, 16), LocalTime.of(10, 44, 10))) {
+        }.setExecuteTime(executeTime));
+        queue.addTask(new TimerTask(true) {
             @Override
             public void _run() {
                 System.out.println("First");
             }
-        });
+        }.setExecuteTime(executeTime2));
 
-    }*/
+    }
 }

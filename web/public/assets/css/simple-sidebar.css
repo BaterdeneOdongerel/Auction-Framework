@@ -56,7 +56,7 @@ body {
 .sidebar-nav {
   position: absolute;
   top: 0;
-  width: 250px;
+  width: 150px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -109,7 +109,7 @@ body {
     width: 0;
   }
   #wrapper.toggled #sidebar-wrapper {
-    width: 250px;
+    width: 150px;
   }
   #page-content-wrapper {
     padding: 20px;

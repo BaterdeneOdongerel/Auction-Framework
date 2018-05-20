@@ -1,13 +1,18 @@
 package service;
 
+import Framework.SingletonPattern.Singleton;
 import db.ConnectionConfiguration;
 import model.Category;
+import utils.Utils;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryServiceImp implements CategoryService {
+
+
+
     public static void main(String args[]){
         CategoryServiceImp c = new CategoryServiceImp();
         c.delete(2);
@@ -24,6 +29,7 @@ public class CategoryServiceImp implements CategoryService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("INSERT INTO category (name, `desc`) "
                     + " VALUES (?, ?)");
             preparedStatement.setString(1, category.getName());
@@ -31,13 +37,13 @@ public class CategoryServiceImp implements CategoryService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
 
@@ -45,7 +51,7 @@ public class CategoryServiceImp implements CategoryService {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -60,6 +66,7 @@ public class CategoryServiceImp implements CategoryService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("SELECT * FROM category WHERE id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -71,27 +78,27 @@ public class CategoryServiceImp implements CategoryService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -101,13 +108,14 @@ public class CategoryServiceImp implements CategoryService {
 
     @Override
     public List<Category> selectAll() {
-        List<Category> categories = new ArrayList<Category>();
+        List<Category> categories = new ArrayList<>();
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM category");
 
@@ -120,27 +128,27 @@ public class CategoryServiceImp implements CategoryService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -155,19 +163,19 @@ public class CategoryServiceImp implements CategoryService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
-
+            ;
             preparedStatement = connection.prepareStatement("DELETE from category where id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
 
@@ -175,7 +183,7 @@ public class CategoryServiceImp implements CategoryService {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -188,7 +196,7 @@ public class CategoryServiceImp implements CategoryService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
-
+            ;
             preparedStatement = connection.prepareStatement("UPDATE category set name = ? , `desc` = ? where id = ?");
             preparedStatement.setInt(3, id);
             preparedStatement.setString(1, category.getName());
@@ -196,13 +204,13 @@ public class CategoryServiceImp implements CategoryService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
 
@@ -210,7 +218,7 @@ public class CategoryServiceImp implements CategoryService {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }

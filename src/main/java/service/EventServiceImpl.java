@@ -1,13 +1,16 @@
 package service;
 
+import Framework.SingletonPattern.Singleton;
 import db.ConnectionConfiguration;
 import model.Event;
+import utils.Utils;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventServiceImpl implements EventService {
+
 
     @Override
     public void create(Event event) {
@@ -16,6 +19,7 @@ public class EventServiceImpl implements EventService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("INSERT INTO event (name, `content`) "
                     + " VALUES (?, ?)");
             preparedStatement.setString(1, event.getName());
@@ -23,13 +27,13 @@ public class EventServiceImpl implements EventService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
 
@@ -37,7 +41,7 @@ public class EventServiceImpl implements EventService {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -56,6 +60,7 @@ public class EventServiceImpl implements EventService {
         ResultSet resultSet = null;
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM event");
             while (resultSet.next()) {
@@ -69,27 +74,27 @@ public class EventServiceImpl implements EventService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -102,25 +107,26 @@ public class EventServiceImpl implements EventService {
         PreparedStatement preparedStatement = null;
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("DELETE from category where id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -132,6 +138,7 @@ public class EventServiceImpl implements EventService {
         PreparedStatement preparedStatement = null;
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("UPDATE category set name = ? , `desc` = ? where id = ?");
             preparedStatement.setInt(3, id);
             preparedStatement.setString(1, category.getName());
@@ -139,20 +146,20 @@ public class EventServiceImpl implements EventService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }

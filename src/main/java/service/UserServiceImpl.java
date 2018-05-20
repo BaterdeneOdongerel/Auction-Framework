@@ -1,12 +1,15 @@
 package service;
 
 
+import Framework.IteratorPattern.ConcreteIterator;
+import Framework.IteratorPattern.Iterator;
+import Framework.SingletonPattern.Singleton;
 import db.ConnectionConfiguration;
 import model.LabelValue;
-
 import model.User;
 import org.springframework.stereotype.Service;
 import props.MessagesProp;
+import utils.Utils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE email = ?");
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
@@ -60,27 +64,27 @@ public class UserServiceImpl implements UserService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -97,6 +101,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -105,32 +110,32 @@ public class UserServiceImpl implements UserService {
                 user.setUserId(resultSet.getInt("user_id"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("communication"));
+                user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -147,6 +152,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM user");
 
@@ -154,34 +160,34 @@ public class UserServiceImpl implements UserService {
                 User user = new User();
                 user.setUserId(resultSet.getInt("user_id"));
                 user.setFirstName(resultSet.getString("first_name"));
-                user.setFirstName(resultSet.getString("last_name"));
+                user.setLastName(resultSet.getString("last_name"));
                 user.setEmail(resultSet.getString("communication"));
                 user.setPassword(resultSet.getString("password"));
                 users.add(user);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -196,6 +202,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("DELETE FROM user WHERE user_id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -203,20 +210,20 @@ public class UserServiceImpl implements UserService {
             System.out.println("DELETE FROM user WHERE user_id = ?");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -229,6 +236,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection
                     .prepareStatement("UPDATE user SET " + "first_name = ?, last_name = ?, email = ? WHERE user_id = ?");
 
@@ -239,20 +247,20 @@ public class UserServiceImpl implements UserService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -266,6 +274,7 @@ public class UserServiceImpl implements UserService {
         boolean ret = false;
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE email = ? and password = ? ");
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
@@ -282,20 +291,20 @@ public class UserServiceImpl implements UserService {
                 currentUser = user;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -309,6 +318,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("INSERT INTO user (first_name, last_name, email, password, user_name) "
                     + " VALUES (?, ?, ?, ?, ?)");
             preparedStatement.setString(1, user.getFirstName());
@@ -319,13 +329,13 @@ public class UserServiceImpl implements UserService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
 
@@ -333,7 +343,7 @@ public class UserServiceImpl implements UserService {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -347,6 +357,18 @@ public class UserServiceImpl implements UserService {
     public List<LabelValue> getUserListForDropDown() {
         List<LabelValue> selectItems = new ArrayList<>();
 
+        ConcreteIterator userList = new ConcreteIterator(selectAll());
+        Iterator userIterator = userList.getIterator();
+
+        while (userIterator.hasNext()) {
+
+            User u = (User) userIterator.next();
+            LabelValue l = new LabelValue();
+            l.setLabel(u.getFirstName() + " " + u.getLastName());
+            l.setValue(u.getUserId());
+            selectItems.add(l);
+        }
+/*
         for (User u : selectAll()) {
 
             LabelValue l = new LabelValue();
@@ -355,7 +377,7 @@ public class UserServiceImpl implements UserService {
             selectItems.add(l);
 
 
-        }
+        }*/
 
         return selectItems;
     }
@@ -369,6 +391,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM user WHERE user_name like '%"+ name+"%'");
             System.out.print("SELECT * FROM user WHERE user_name like '%"+ name+"%'");
@@ -384,27 +407,27 @@ public class UserServiceImpl implements UserService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }

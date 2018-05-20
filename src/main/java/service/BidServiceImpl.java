@@ -2,7 +2,6 @@ package service;
 
 import db.ConnectionConfiguration;
 import model.Bid;
-
 import org.springframework.stereotype.Service;
 import utils.Utils;
 
@@ -12,34 +11,35 @@ import java.util.List;
 
 @Service("bidService")
 public class BidServiceImpl implements BidService {
+
+
     @Override
     public void create(Bid bid) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        UserServiceImpl useImpl = new UserServiceImpl();
+        int userId = Services.UserService.getCurrentUser().getUserId();
 
         try {
-
-
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.
                     prepareStatement("INSERT INTO bid (amount, bidDate, auction, user) "
                             + " VALUES (?, ?, ?, ?)");
             preparedStatement.setDouble(1, bid.getAmount());
             preparedStatement.setDate(2, Utils.sqlCurrentDate());
             preparedStatement.setLong(3, bid.getAuction());
-            preparedStatement.setLong(4, useImpl.getCurrentUser().getUserId());
+            preparedStatement.setLong(4, userId);
 
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
 
@@ -47,7 +47,7 @@ public class BidServiceImpl implements BidService {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -62,6 +62,7 @@ public class BidServiceImpl implements BidService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("SELECT * FROM bid WHERE id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -75,27 +76,27 @@ public class BidServiceImpl implements BidService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -112,6 +113,7 @@ public class BidServiceImpl implements BidService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM bid");
 
@@ -120,33 +122,33 @@ public class BidServiceImpl implements BidService {
                 bid.setId(resultSet.getInt("id"));
                 bid.setAmount(resultSet.getDouble("amount"));
                 bid.setBidDate(resultSet.getDate("bidDate"));
-                // bid.setUser(resultSet.getInt("user"));
-                //bid.setAuction(resultSet.getInt("auction"));
+                bid.setUser(resultSet.getInt("user"));
+                bid.setAuction(resultSet.getInt("auction"));
                 bids.add(bid);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -161,6 +163,7 @@ public class BidServiceImpl implements BidService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection.prepareStatement("DELETE FROM bid WHERE id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -168,20 +171,20 @@ public class BidServiceImpl implements BidService {
             System.out.println("DELETE FROM bid WHERE id = ?");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }
@@ -194,6 +197,7 @@ public class BidServiceImpl implements BidService {
 
         try {
             connection = ConnectionConfiguration.getConnection();
+            ;
             preparedStatement = connection
                     .prepareStatement("UPDATE bid SET " + "amount = ?, bidDate = ?, auction = ?, user=? WHERE id = ?");
 
@@ -205,20 +209,20 @@ public class BidServiceImpl implements BidService {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         } finally {
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Utils.logEvent(e.getMessage());
                 }
             }
         }

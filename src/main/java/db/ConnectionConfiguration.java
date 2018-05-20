@@ -3,6 +3,7 @@ package db;
 
 
 import props.DatabaseProp;
+import utils.Utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,7 +24,7 @@ public class ConnectionConfiguration {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(URL);
         } catch (Exception e) {
-            e.printStackTrace();
+            Utils.logEvent(e.getMessage());
         }
         return connection;
     }

@@ -4,6 +4,7 @@ package controller;
 import model.Auction;
 import service.AuctionService;
 import service.ProductService;
+import service.Services;
 import service.UserService;
 import utils.Utils;
 
@@ -57,6 +58,10 @@ public class EditAuctionServlet extends BaseServlet {
     protected void post(HttpServletRequest request, HttpServletResponse response) throws Exception {
         AuctionService auctionServiceImp = Services.AuctionService;
 
+        // String[] names = request.getParameterValues("names");
+        //List list =  Arrays.asList(names);
+        // String[] isRunning1= request.getParameterValues("isRunning");
+
         String delete_id = request.getParameter("delete_id");
         if (delete_id != null) { // delete
             auctionServiceImp.delete(Integer.parseInt(delete_id));
@@ -67,6 +72,7 @@ public class EditAuctionServlet extends BaseServlet {
             String product = request.getParameter("product");
             String bidOwner = request.getParameter("bidOwner");
             String minimumPrice = request.getParameter("minimumPrice");
+            String[] isRunning = request.getParameterValues("isRunning");//TODO CHECK
 
             Auction auction = new Auction();
 
@@ -75,11 +81,13 @@ public class EditAuctionServlet extends BaseServlet {
             auction.setMinimumPrice(Double.valueOf(minimumPrice));
             auction.setProduct(Integer.parseInt(product));
             auction.setBidOwner(Integer.parseInt(bidOwner));
+            auction.setRunning((!isRunning[0].isEmpty() && isRunning != null) && Boolean.getBoolean(isRunning[0]));
 
 
             if (sid == null || "-1".equals(sid)) { // create
                 auctionServiceImp.create(auction);
             } else { // update
+
                 auctionServiceImp.update(auction, Integer.parseInt(sid));
             }
 
