@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
             while (resultSet.next()) {
                 user = new User();
-                user.setUserId(resultSet.getInt("id"));
+                user.setUserId(resultSet.getInt("user_id"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
                 user.setEmail(resultSet.getString("communication"));
@@ -397,7 +397,7 @@ public class UserServiceImpl implements UserService {
             System.out.print("SELECT * FROM user WHERE user_name like '%"+ name+"%'");
             while (resultSet.next()) {
                 User user = new User();
-                user.setUserId(resultSet.getInt("id"));
+                user.setUserId(resultSet.getInt("user_id"));
                 user.setUsername(resultSet.getString("user_name"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));

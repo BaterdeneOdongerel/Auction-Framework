@@ -18,16 +18,17 @@ public class EmailService extends BaseCommunicationService {
     void _send(Option option, CommunicationType type) {
         final String username = prop.getProp("from");
         final String password = prop.getProp("password");
-        Properties props = new Properties();
-        String authen = "mail.smtp.auth";
-        String enable = "mail.smtp.starttls.enable";
-        String host = "mail.smtp.host";
-        String port = "mail.smtp.port";
 
-        String[] params = new String[]{authen, enable, host, port};
-        for (String key : params) {
-            props.put(key, prop.getProp(key));
-        }
+        Properties props = new Properties();
+        props.setProperty("mail.transport.protocol", "smtp");
+        props.setProperty("mail.host", "smtp.gmail.com");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        props.put("mail.debug", "true");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.fallback", "false");
+        props.put("mail.smtp.starttls.enable", "true");
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
