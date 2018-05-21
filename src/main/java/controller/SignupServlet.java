@@ -53,7 +53,14 @@ public class SignupServlet extends BaseServlet {
                     .withContent("Greeting from Auction X! And congrats on your good choice")
                     .withSubject("Welcome to Auction X System")
                     .build();
+            Option welcomeText = new Option.Builder()
+                    .withTo("+16414511523")
+                    .withName("Van")
+                    .withContent("Greeting from Auction X! And congrats on your good choice")
+                    .withSubject("Welcome to Auction X System")
+                    .build();
             Services.Communicator.send(welcomeEmail, CommunicationType.EMAIL);
+            Services.Communicator.send(welcomeText, CommunicationType.SMS);
             LoggingService.createLog("User Created", email + " is created", LogType.Event);
             response.sendRedirect("/");
         } else {
