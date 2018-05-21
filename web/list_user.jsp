@@ -37,8 +37,7 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
+                    <th>User Name</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
@@ -46,7 +45,6 @@
                 <c:forEach items="${users}" var="user">
                     <tr>
                         <td>${user.firstName}</td>
-                        <td>${user.email}</td>
                         <td><a href="/delete_user?id=${user.userId}"> X </a></td>
                     </tr>
                 </c:forEach>
