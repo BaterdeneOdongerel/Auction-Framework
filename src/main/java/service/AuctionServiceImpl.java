@@ -695,7 +695,6 @@ public class AuctionServiceImpl extends AbstractAuctionTemplate implements Aucti
                 auction.setCurrentWinningBid(b.getId());
                 auction.setWinner(b.getUser());
                 auction.setEndDate(b.getEndDate());
-
                 auctionWinner.add(auction);
             }
         } catch (Exception e) {

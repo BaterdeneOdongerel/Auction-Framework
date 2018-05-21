@@ -14,7 +14,9 @@ import utils.Utils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductServiceImp implements ProductService {
 
@@ -308,28 +310,27 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public List<Auction> selectWithAuctions() {
-        List<Auction> auctions = new ArrayList<>();
+        Map<Integer, Auction> auctions = new HashMap<>();
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            ;
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("select * from product join auction on product.id = auction.product");
-
+            resultSet = statement.executeQuery("select * from auction join product on product.id = auction.product join bid  on auction.id = bid.auction where auction.isrunning = 1");
             while (resultSet.next()) {
                 Auction auction = new Auction();
-                auction.setId(resultSet.getInt("id"));
+                int id = resultSet.getInt("id");
+                auction.setId(id);
                 auction.setName(resultSet.getString("name"));
                 auction.setRunning(resultSet.getBoolean("isrunning"));
                 auction.setImageLink(resultSet.getString("image_path"));
                 auction.setStartDate(resultSet.getDate("startDate"));
                 auction.setEndDate(resultSet.getDate("endDate"));
                 auction.setMinimumPrice(resultSet.getDouble("minimumPrice"));
-                auction.setCurrentWinningBid(resultSet.getLong("currentWinningBid"));
-                auctions.add(auction);
+                auction.setCurrentWinningBid(resultSet.getLong("amount"));
+                auctions.put(id, auction);
             }
 
         } catch (Exception e) {
@@ -358,7 +359,7 @@ public class ProductServiceImp implements ProductService {
             }
         }
 
-        return auctions;
+        return new ArrayList<>(auctions.values());
     }
 
     @Override

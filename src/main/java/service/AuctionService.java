@@ -16,5 +16,7 @@ public interface AuctionService extends CrudTemplate<Auction> {
 
     List<Auction> processAuction();
 
+    void calculateWinningBid();
+
     void startAuction(Auction auction);
 }

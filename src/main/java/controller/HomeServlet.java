@@ -16,8 +16,8 @@ public class HomeServlet extends BaseServlet {
 
     @Override
     protected void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Auction> products = Services.ProductService.selectWithAuctions();
-        request.setAttribute("products" , products);
+        List<Auction> auctions = Services.ProductService.selectWithAuctions();
+        request.setAttribute("auctions" , auctions);
         RequestDispatcher view = request.getRequestDispatcher("index.jsp");
         view.forward(request, response);
     }
