@@ -47,7 +47,7 @@
                     <tr>
                         <td>${user.firstName}</td>
                         <td>${user.email}</td>
-                        <td><a href="/edit_category?delete_id=${cat.id}"> delete </a></td>
+                        <td><a href="/delete_user?id=${user.id}"> X </a></td>
                     </tr>
                 </c:forEach>
 

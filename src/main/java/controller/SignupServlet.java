@@ -47,7 +47,6 @@ public class SignupServlet extends BaseServlet {
             user.setEmail(email);
             imp.create(user);
             request.getSession().setAttribute("user", user);
-            response.sendRedirect("/");
             Option welcomeEmail = new Option.Builder()
                     .withTo(email)
                     .withName(fname)
@@ -56,6 +55,7 @@ public class SignupServlet extends BaseServlet {
                     .build();
             Services.Communicator.send(welcomeEmail, CommunicationType.EMAIL);
             LoggingService.createLog("User Created", email + " is created", LogType.Event);
+            response.sendRedirect("/");
         } else {
 
             RequestDispatcher view = request.getRequestDispatcher("signup.jsp");
