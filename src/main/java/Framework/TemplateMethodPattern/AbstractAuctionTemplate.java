@@ -47,5 +47,9 @@ public abstract class AbstractAuctionTemplate {
 
     public abstract List<Auction> calculateWinningBid(List<Bid> bids);
 
+    public void calculateWinningBid() {
+        processCurrentWinningBid(currentWinningBid());
+    }
+
 
 }

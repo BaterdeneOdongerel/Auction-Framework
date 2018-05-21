@@ -87,15 +87,15 @@
 <div class="container">
     <div class="row">
         <div class="tab-content">
-            <div id="men" class="tab-pane fade in active">
-                <div class="arrival-item">
+            <div id="men" class="">
+                <div class="">
                     <div>
 
-                        <c:forEach items="${products}" var="p">
+                        <c:forEach items="${auctions}" var="auction">
                             <div class="single-product-area">
                                 <div class="single-shop">
                                     <a href="single-shop.html">
-                                        <img src="${p.imageLink}" alt="">
+                                        <img src="${auction.imageLink}" alt="">
                                     </a>
                                     <div class="shop-icon">
                                         <ul>
@@ -106,13 +106,14 @@
                                     </div>
                                 </div>
                                 <div class="single_featured_label text-center">
-                                    <h3>${p.name}</h3>
-                                    <h4>${p.currentWinningBid}</h4>
-                                    <p>${p.startDate} TO ${p.endDate}</p>
+                                    <h3>${auction.name}</h3>
+                                    <h5>Min Bid: ${auction.minimumPrice}</h5>
+                                    <h5>Current Bid: ${auction.currentWinningBid}</h5>
+                                    <p>${auction.startDate} TO ${auction.endDate}</p>
                                     <form method="POST" action="/create_bid">
                                         <input type="number" name="amount"/>
-                                        <input class="hidden" name="auctionId" value="${p.id}"/>
-                                        <button type="submit" class="add-cart text-uppercase btn btn-danger"> Bid</button>
+                                        <input class="hidden" name="auctionId" value="${auction.id}"/>
+                                        <button type="submit" class="add-cart text-uppercase btn btn-danger">Bid</button>
                                     </form>
                                 </div>
                             </div>
