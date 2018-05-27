@@ -1,3 +1,6 @@
+Auction Framework
+
+
 Problem
 
 Every auction system operates in a very similar manner:
@@ -38,3 +41,20 @@ The web application will have these features
 + Bid operating
 + Admin dashboard to: manage auctions, users and manage bids for each auction
 + Emailing users
+
+
+
+Patterns:
+
+# Pattern                       Class
+1 Singleton                     DatabaseProp, EmailProp, MessagesProp, SMSProp
+2 Builder                       Option
+3 Factory                       TraceFactory
+4 Template                      BaseCommunicationService, BaseServlet,AbstractAuctionTemplate
+5 Iterator                      Aggregate, ConcreteIterator, Iterator
+6 Facade                        ProductService, EventService, CategoryService,BidService, AuctionService
+7 Observer                      TaskQueue
+8 Strategy                      CommunicationServiceImpl
+9 Mediator                      BaseServlet
+
+10 Bridge                       CrudTemplate, Services
