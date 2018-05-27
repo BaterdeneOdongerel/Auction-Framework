@@ -46,23 +46,23 @@ The web application will have these features
 
 Patterns:
 
-# Pattern                       Class
-1 Singleton                     DatabaseProp, EmailProp, MessagesProp, SMSProp
+# Pattern:                       Class(es) 
+1 Singleton:                     DatabaseProp, EmailProp, MessagesProp, SMSProp
 
-2 Builder                       Option
+2 Builder:                       Option
 
-3 Factory                       TraceFactory
+3 Factory:                      TraceFactory
 
-4 Template                      BaseCommunicationService, BaseServlet,AbstractAuctionTemplate
+4 Template:                      BaseCommunicationService, BaseServlet,AbstractAuctionTemplate
 
-5 Iterator                      Aggregate, ConcreteIterator, Iterator
+5 Iterator:                      Aggregate, ConcreteIterator, Iterator
 
-6 Facade                        ProductService, EventService, CategoryService,BidService, AuctionService
+6 Facade:                        ProductService, EventService, CategoryService,BidService, AuctionService
 
-7 Observer                      TaskQueue
+7 Observer:                     TaskQueue
 
-8 Strategy                      CommunicationServiceImpl
+8 Strategy:                      CommunicationServiceImpl
 
-9 Mediator                      BaseServlet
+9 Mediator:                      BaseServlet
 
-10 Bridge                       CrudTemplate, Services
+10 Bridge:                       CrudTemplate, Services
